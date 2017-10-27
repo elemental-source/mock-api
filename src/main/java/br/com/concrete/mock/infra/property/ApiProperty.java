@@ -20,6 +20,7 @@ public class ApiProperty {
     private String host;
     private List<UriConfiguration> uriConfigurations;
     private List<DefaultHeader> defaultHeaders;
+    private String magicalHeaders;
 
     public List<String> getAcceptedHeaders() {
         return acceptedHeaders;
@@ -68,4 +69,11 @@ public class ApiProperty {
         this.defaultHeaders = defaultHeaders;
     }
 
+    public String getMagicalHeaders() {
+        return magicalHeaders;
+    }
+
+    public void setMagicalHeaders(String magicalHeaders) {
+        this.magicalHeaders = magicalHeaders;
+    }
 }

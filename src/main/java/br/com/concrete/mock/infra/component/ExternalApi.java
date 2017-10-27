@@ -12,11 +12,7 @@ import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -66,7 +62,19 @@ public class ExternalApi {
         request.getBody().ifPresent(LOGGER::info);
         httpHeaders.ifPresent(list -> LOGGER.info(list.toString()));
 
-        final HttpEntity<String> entity = httpHeaders
+        String magicalHeaders = apiProperty.getMagicalHeaders();
+        String[] split = magicalHeaders.split(",");
+        HttpHeaders httpHeadersFiltrado = new HttpHeaders();
+
+        for (String s : split) {
+            if (httpHeaders.get().containsKey(s)) {
+                httpHeadersFiltrado.add(s, String.valueOf(httpHeaders.get().get(s)));
+            }
+        }
+
+        Optional<HttpHeaders> optionalHttpHeaders = Optional.ofNullable(httpHeadersFiltrado);
+
+        final HttpEntity<String> entity = optionalHttpHeaders
                 .map(headers -> request.getBody().map(body -> new HttpEntity<>(body, headers))
                         .orElse(new HttpEntity<>(headers)))
                 .orElse(request.getBody().map(HttpEntity<String>::new).orElse(new HttpEntity<>((String) null)));
@@ -78,6 +86,7 @@ public class ExternalApi {
                 .concat(parameters);
 
         LOGGER.info("URL => {}", url);
+
         final ResponseEntity<String> apiResult = restTemplate.exchange(url, HttpMethod.valueOf(request.getMethod().name().toUpperCase()), entity,
                 String.class);
         return Optional.of(new ExternalApiResult(apiResult, uriConfiguration));
