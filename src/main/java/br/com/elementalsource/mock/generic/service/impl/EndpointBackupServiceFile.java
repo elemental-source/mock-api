@@ -13,6 +13,7 @@ import br.com.elementalsource.mock.infra.component.FromJsonStringToObjectConvert
 import br.com.elementalsource.mock.infra.property.FileProperty;
 import com.google.gson.Gson;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +86,7 @@ public class EndpointBackupServiceFile implements EndpointBackupService {
             final String backupPath = fileProperty.getFileBase();
             Files
                     .list(Paths.get(backupPath))
-                    .map(path -> path.getFileName().toFile())
+                    .map(Path::toFile)
                     .filter(file -> !file.getName().startsWith("."))
                     .forEach(FileSystemUtils::deleteRecursively);
         } catch (IOException e) {

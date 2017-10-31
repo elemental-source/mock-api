@@ -25,8 +25,11 @@ public class CompareJson {
             Map.Entry entry = (Map.Entry) entrySet;
             final Object valueCompare = toCompare.get(entry.getKey());
 
-            if(valueCompare instanceof LinkedHashMap && entry.getValue() instanceof LinkedHashMap){
-                return ((LinkedHashMap)valueCompare).size() == ((LinkedHashMap) entry.getValue()).size();
+            if (valueCompare instanceof LinkedHashMap && entry.getValue() instanceof LinkedHashMap){
+                LinkedHashMap compare = (LinkedHashMap) valueCompare;
+                LinkedHashMap entryValue = (LinkedHashMap) entry.getValue();
+
+                return compare.equals(entryValue);
             }
 
             if (!entry.getValue().equals(valueCompare)) {

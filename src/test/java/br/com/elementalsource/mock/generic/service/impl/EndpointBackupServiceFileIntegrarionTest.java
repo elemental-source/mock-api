@@ -92,7 +92,6 @@ public class EndpointBackupServiceFileIntegrarionTest {
     }
 
     @Test(timeout = 2000)
-    @Ignore
     public void shouldDoARequestAndDoNotCaptureBackupWhenIsNotConfigured() throws IOException, JSONException {
         // when
         final ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);

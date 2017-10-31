@@ -85,8 +85,7 @@ public class EndpointBackupServiceFileTest {
     }
 
     @Test
-    @Ignore
-    public void shouldRemoveEverithingImportantInsidePath() throws IOException {
+    public void shouldRemoveEverythingImportantInsidePath() throws IOException {
         // given
         final String baseNameFilesToRemove = BACKUP_TEMP + "data/files";
         final Path pathsToRemove = Paths.get(baseNameFilesToRemove + "/file1.json");

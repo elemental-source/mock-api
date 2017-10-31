@@ -88,7 +88,6 @@ public class CompareJsonTest {
         assertFalse(equivalent);
     }
 
-    @Ignore
     @Test
     public void shouldNotBeEquivalentWhenExistsDifferentSubObjects() throws IOException {
         // given
