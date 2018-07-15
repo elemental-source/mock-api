@@ -17,7 +17,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'jacoco'
 apply plugin: 'docker'
 apply plugin: 'findbugs'
-apply plugin: 'checkstyle'
+//apply plugin: 'checkstyle'
 
 findbugs {
     sourceSets = [sourceSets.main]
@@ -26,11 +26,11 @@ findbugs {
     reportLevel = "high"
 }
 
-checkstyle {
-    toolVersion = '8.3'
-    sourceSets= [sourceSets.main]
-    ignoreFailures = true
-}
+//checkstyle {
+//    toolVersion = '8.3'
+//    sourceSets= [sourceSets.main]
+//    ignoreFailures = true
+//}
 
 version = '4.0.0-SNAPSHOT'
 sourceCompatibility = 1.8
