@@ -77,11 +77,11 @@ public class ExternalApi {
 
         LOGGER.info("URL => {}", url);
 
-        final WebClient.Builder webClientBuilder = WebClient
-                .builder()
-                .baseUrl(url)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-
+//        final WebClient.Builder webClientBuilder = WebClient
+//                .builder()
+//                .baseUrl(url)
+//                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+//
 //        webClientBuilder.build().method(HttpMethod.GET).retrieve().bodyToMono(Map.class).block();
 
         final ResponseEntity<String> apiResult = restTemplate.exchange(url, HttpMethod.valueOf(request.getMethod().name().toUpperCase()), entity,
