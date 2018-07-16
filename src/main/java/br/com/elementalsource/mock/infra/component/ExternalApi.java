@@ -89,40 +89,40 @@ public class ExternalApi {
         return Optional.of(new ExternalApiResult(apiResult, uriConfiguration));
     }
 
-    public Optional<ExternalApiResult> okHttpClientRequest(HttpServletRequest request, Request req){
-
-        final Boolean state = captureStateRepository
-                .getCurrent()
-                .map(CaptureState::isEnabled)
-                .orElse(true);
-
-        Enumeration<String> headerNames = request.getHeaderNames();
-        Headers.Builder builder = new Headers.Builder();
-        while (headerNames.hasMoreElements()) {
-            final String name = headerNames.nextElement();
-            builder.add(name, request.getHeader(name));
-        }
-        Headers h = builder.build();
-
-        final UriConfiguration uriConfiguration = apiProperty
-                .getConfiguration(req.getUri())
-                .orElse(new UriConfiguration(apiProperty.getHost(), Pattern.compile(".*"), state));
-
-        okhttp3.Request okHttpRequest = new okhttp3.Request.Builder()
-                .url(uriConfiguration.getHost()+req.getUri()+"?"+request.getQueryString())
-                .get()
-                .headers(h)
-                .build();
-
-        ResponseEntity<String> apiResult = null;
-        try {
-            Response response = okHttpClient.newCall(okHttpRequest).execute();
-            apiResult = new ResponseEntity<>(response.body().string(), new HttpHeaders(), HttpStatus.OK);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return Optional.of(new ExternalApiResult(apiResult, uriConfiguration));
-    }
+//    public Optional<ExternalApiResult> okHttpClientRequest(HttpServletRequest request, Request req){
+//
+//        final Boolean state = captureStateRepository
+//                .getCurrent()
+//                .map(CaptureState::isEnabled)
+//                .orElse(true);
+//
+//        Enumeration<String> headerNames = request.getHeaderNames();
+//        Headers.Builder builder = new Headers.Builder();
+//        while (headerNames.hasMoreElements()) {
+//            final String name = headerNames.nextElement();
+//            builder.add(name, request.getHeader(name));
+//        }
+//        Headers h = builder.build();
+//
+//        final UriConfiguration uriConfiguration = apiProperty
+//                .getConfiguration(req.getUri())
+//                .orElse(new UriConfiguration(apiProperty.getHost(), Pattern.compile(".*"), state));
+//
+//        okhttp3.Request okHttpRequest = new okhttp3.Request.Builder()
+//                .url(uriConfiguration.getHost()+req.getUri()+"?"+request.getQueryString())
+//                .get()
+//                .headers(h)
+//                .build();
+//
+//        ResponseEntity<String> apiResult = null;
+//        try {
+//            Response response = okHttpClient.newCall(okHttpRequest).execute();
+//            apiResult = new ResponseEntity<>(response.body().string(), new HttpHeaders(), HttpStatus.OK);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return Optional.of(new ExternalApiResult(apiResult, uriConfiguration));
+//    }
 
 }

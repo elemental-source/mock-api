@@ -9,6 +9,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.util.Map;
 import java.util.Optional;
 
@@ -41,7 +42,11 @@ public class QueryMapper {
 
                 })
                 .filter(parameters -> !parameters.isEmpty())
-                .map(MultiValueMap::toSingleValueMap);
+                .map(MultiValueMap::toSingleValueMap)
+                .map(o -> {
+                    o.replaceAll((k,v) -> URLDecoder.decode(v));
+                    return o;
+                });
     }
 
 }
