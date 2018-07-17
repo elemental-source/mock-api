@@ -1,5 +1,4 @@
 # vmoptions: -Dspring.profiles.active=test
-
 server.port: 9090
 
 api:
