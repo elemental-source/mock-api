@@ -18,6 +18,12 @@ public class QueryMapper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QueryMapper.class);
 
+    private final QueryDecoder.DecoderFunction decoderFunction;
+
+    public QueryMapper(QueryDecoder.DecoderFunction decoderFunction) {
+        this.decoderFunction = decoderFunction;
+    }
+
     public Optional<Map<String, String>> mapper(final String queryRequest) {
         return Optional
                 .ofNullable(queryRequest)
@@ -43,10 +49,7 @@ public class QueryMapper {
                 })
                 .filter(parameters -> !parameters.isEmpty())
                 .map(MultiValueMap::toSingleValueMap)
-                .map(o -> {
-                    o.replaceAll((k,v) -> URLDecoder.decode(v));
-                    return o;
-                });
+                .map(decoderFunction::decode);
     }
 
 }
