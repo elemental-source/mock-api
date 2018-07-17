@@ -15,7 +15,7 @@ import java.util.function.Function;
 import static java.util.stream.Collectors.toMap;
 
 @Configuration
-class QueryDecoder {
+public class QueryDecoder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QueryDecoder.class);
 
@@ -25,7 +25,7 @@ class QueryDecoder {
     }
 
     @Bean
-    DecoderFunction decoderFactoryImplementation(@Value("${decoder.characterEncoding:}") final String characterEncoding) {
+    public DecoderFunction decoderFactoryImplementation(@Value("${decoder.characterEncoding:}") final String characterEncoding) {
         if (StringUtils.isBlank(characterEncoding)) {
             return parameters -> parameters;
         } else {
