@@ -1,8 +1,8 @@
 package br.com.elementalsource.mock.infra.component.file;
 
-import br.com.elementalsource.mock.generic.repository.impl.ExistentFile;
-import br.com.elementalsource.mock.generic.repository.impl.ExistentFile.PathParamExtractor;
-import br.com.elementalsource.mock.generic.repository.impl.ExistentFiles;
+import br.com.elementalsource.mock.generic.repository.impl.ExistingFile;
+import br.com.elementalsource.mock.generic.repository.impl.ExistingFile.PathParamExtractor;
+import br.com.elementalsource.mock.generic.repository.impl.ExistingFiles;
 import br.com.elementalsource.mock.infra.property.FileProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,13 +20,13 @@ import javax.servlet.http.HttpServletRequest;
 public class BaseFileNameBuilderModel extends BaseFileNameBuilderBase implements BaseFileNameBuilder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseFileNameBuilderModel.class);
-    private ExistentFiles existentFiles;
+    private ExistingFiles existingFiles;
     private HttpServletRequest request;
 
     @Autowired
-    public BaseFileNameBuilderModel(@Qualifier("FilePropertyModel") FileProperty fileProperty, ExistentFiles existentFiles, HttpServletRequest request) {
+    public BaseFileNameBuilderModel(@Qualifier("FilePropertyModel") FileProperty fileProperty, ExistingFiles existingFiles, HttpServletRequest request) {
         super(fileProperty);
-        this.existentFiles = existentFiles;
+        this.existingFiles = existingFiles;
         this.request = request;
         final String fileBase = fileProperty.getFileBase();
         final File file = new File(fileBase);
@@ -36,12 +35,12 @@ public class BaseFileNameBuilderModel extends BaseFileNameBuilderBase implements
 
     @Override
     public String buildPath(RequestMethod requestMethod, String pathUri) {
-        List<ExistentFile> files = existentFiles.getExistentFiles();
+        List<ExistingFile> files = existingFiles.getExistingFiles();
         String rawPath = super.buildPath(requestMethod, pathUri);
 
         return files.stream()
-                .map(ef -> ef.matches(rawPath))
-                .filter(PathParamExtractor::isMatchs)
+                .map(ef -> ef.extract(rawPath))
+                .filter(PathParamExtractor::matches)
                 .peek(pe -> {
                    pe.getParameters().forEach(request::setAttribute);
                 })

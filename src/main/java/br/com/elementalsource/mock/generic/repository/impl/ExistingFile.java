@@ -7,22 +7,18 @@ import java.util.regex.Pattern;
 
 import com.google.common.base.MoreObjects;
 
-public class ExistentFile implements Comparable<ExistentFile> {
+public class ExistingFile implements Comparable<ExistingFile> {
 
 	private final Pattern regex;
 	private final String originalPath;
 
-	ExistentFile(String path) {
+	ExistingFile(String path) {
 		originalPath = path;
 		regex = Pattern.compile(path.replaceAll("#\\{\\{\\w*\\}\\}", "(.*)"));
 	}
 
-	public PathParamExtractor matches(String rawPath) {
+	public PathParamExtractor extract(String rawPath) {
 		return new PathParamExtractor(rawPath);
-	}
-
-	public String getOriginalPath() {
-		return originalPath;
 	}
 
 	@Override
@@ -34,22 +30,22 @@ public class ExistentFile implements Comparable<ExistentFile> {
 	}
 
 	@Override
-	public int compareTo(final ExistentFile o) {
+	public int compareTo(final ExistingFile o) {
 		return this.originalPath.compareTo(o.originalPath) * -1;
 	}
 
 	public class PathParamExtractor {
 
-		private boolean matchs;
+		private boolean matches;
 		private Map<String, String> parameters = new HashMap<>();
 
 		public PathParamExtractor(String rawPath ) {
 			Matcher rawPathMatcher = regex.matcher(rawPath);
 			Matcher originalPathMatcher = regex.matcher(originalPath);
 
-			matchs = rawPathMatcher.matches() && originalPathMatcher.matches();
+			matches = rawPathMatcher.matches() && originalPathMatcher.matches();
 
-			if(matchs){
+			if(matches){
 				for (int i = 1; i <= rawPathMatcher.groupCount(); i++){
 					parameters.put(originalPathMatcher.group(i).replaceAll("\\W", ""),rawPathMatcher.group(i));
 				}
@@ -57,8 +53,8 @@ public class ExistentFile implements Comparable<ExistentFile> {
 			}
 		}
 
-		public boolean isMatchs() {
-			return matchs;
+		public boolean matches() {
+			return matches;
 		}
 
 		public Map<String, String> getParameters() {

@@ -19,25 +19,25 @@ import br.com.elementalsource.mock.infra.property.FileProperty;
 
 @Component
 @ApplicationScope
-public class ExistentFiles {
+public class ExistingFiles {
 	@Autowired @Qualifier("FilePropertyModel")
 	private FileProperty fileProperty;
-	private List<ExistentFile> existentFiles;
+	private List<ExistingFile> existingFiles;
 
 	@PostConstruct
 	public void setup() throws IOException {
 		String fileBase = fileProperty.getFileBase();
-		existentFiles = Files.walk(Paths.get(fileBase))
+		existingFiles = Files.walk(Paths.get(fileBase))
 				.filter(Files::isRegularFile)
 				.map(Path::getParent)
 				.map(Path::toString)
-				.map(ExistentFile::new)
+				.map(ExistingFile::new)
 				.sorted()
 				.distinct()
 				.collect(toList());
 	}
 
-	public List<ExistentFile> getExistentFiles(){
-		return existentFiles;
+	public List<ExistingFile> getExistingFiles(){
+		return existingFiles;
 	}
 }
