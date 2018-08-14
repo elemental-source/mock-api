@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public interface EndpointRepository {
 
-    Collection<Endpoint> getByMethodAndUri(RequestMethod requestMethod, String pathUri);
+    Collection<Endpoint> getAllByRequest(Request request);
 
-    Optional<Endpoint> getByMethodAndRequest(Request request);
+    Optional<Endpoint> getByRequest(Request request);
 
 }

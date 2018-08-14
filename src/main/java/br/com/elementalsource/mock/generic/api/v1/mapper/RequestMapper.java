@@ -3,6 +3,8 @@ package br.com.elementalsource.mock.generic.api.v1.mapper;
 import br.com.elementalsource.mock.generic.mapper.HeaderMapper;
 import br.com.elementalsource.mock.generic.model.Request;
 import br.com.elementalsource.mock.generic.mapper.QueryMapper;
+import br.com.elementalsource.mock.infra.property.ApiProperty;
+
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

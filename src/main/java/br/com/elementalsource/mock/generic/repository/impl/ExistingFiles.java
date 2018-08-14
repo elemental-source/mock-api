@@ -26,7 +26,7 @@ public class ExistingFiles {
 
 	@PostConstruct
 	public void setup() throws IOException {
-		String fileBase = fileProperty.getFileBase();
+		String fileBase = fileProperty.getRootPath();
 		existingFiles = Files.walk(Paths.get(fileBase))
 				.filter(Files::isRegularFile)
 				.map(Path::getParent)
@@ -40,4 +40,16 @@ public class ExistingFiles {
 	public List<ExistingFile> getExistingFiles(){
 		return existingFiles;
 	}
+
+	public static void main(String[] args) throws IOException {
+		Files.walk(Paths.get("mocks-test"))
+				.filter(Files::isRegularFile)
+				.map(Path::getParent)
+				.map(Path::toString)
+				.map(ExistingFile::new)
+				.sorted()
+				.distinct()
+				.forEach(System.out::println);
+	}
+
 }

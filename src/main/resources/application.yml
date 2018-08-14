@@ -8,9 +8,9 @@ api:
 #    - "Content-Type"
 
   # When is not find in repository, then will try to do a request in this host
-  host: "http://www.mocky.io"
+  host: "http://tyrion-us-dev.kube.aws.elo7.io"
 
-  magicalHeaders: "Accept,User-Agent,Content-Type"
+  acceptedHeaders: "Accept,User-Agent,Content-Type,X-Auth-User-Id"
 
   # Default headers to do a request
   defaultHeaders:
@@ -28,12 +28,14 @@ api:
   # When a request uri match with some pattern, than this host will be used
   uriConfigurations:
     -
-      host: "http://www.mocky2.io"
-      pattern: "begin-of-uri/|another-pattern/"
-      backup: false
+      host: "http://tyrion-us-dev.kube.aws.elo7.io"
+      pattern: "/tyrion"
+      prefixPath: "tyrion"
     -
-      host: "http://www.mocky3.io"
-      pattern: "teste/|test/"
+      host: "http://frenzy-br-integration-blue.aws.elo7.io/frenzy"
+      pattern: "/frenzy"
+      prefixPath: "frenzy"
+
 
 # Paths of json
 file:
