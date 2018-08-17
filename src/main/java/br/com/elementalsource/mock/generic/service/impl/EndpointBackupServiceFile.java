@@ -36,9 +36,13 @@ public class EndpointBackupServiceFile implements EndpointBackupService {
     private final FromJsonStringToObjectConverter fromJsonStringToObjectConverter;
     private final JsonFormatterPretty jsonFormatterPretty;
     private final EndpointRepository endpointRepository;
+    private final Gson gson;
 
     @Autowired
-    public EndpointBackupServiceFile(@Qualifier("FilePropertyBackup") FileProperty fileProperty, FileExtensionProperty fileExtensionProperty, @Qualifier("BaseFileNameBuilderBackup") BaseFileNameBuilder baseFileNameBuilder, FileNameGenerator fileNameGenerator, FromJsonStringToObjectConverter fromJsonStringToObjectConverter, JsonFormatterPretty jsonFormatterPretty, @Qualifier("EndpointRepositoryBackup") EndpointRepository endpointRepository) {
+    public EndpointBackupServiceFile(@Qualifier("FilePropertyBackup") FileProperty fileProperty, FileExtensionProperty fileExtensionProperty,
+                                     @Qualifier("BaseFileNameBuilderBackup") BaseFileNameBuilder baseFileNameBuilder, FileNameGenerator fileNameGenerator,
+                                     FromJsonStringToObjectConverter fromJsonStringToObjectConverter, JsonFormatterPretty jsonFormatterPretty,
+                                     @Qualifier("EndpointRepositoryBackup") EndpointRepository endpointRepository, Gson gson) {
         this.fileProperty = fileProperty;
         this.fileExtensionProperty = fileExtensionProperty;
         this.baseFileNameBuilder = baseFileNameBuilder;
@@ -46,6 +50,7 @@ public class EndpointBackupServiceFile implements EndpointBackupService {
         this.fromJsonStringToObjectConverter = fromJsonStringToObjectConverter;
         this.jsonFormatterPretty = jsonFormatterPretty;
         this.endpointRepository = endpointRepository;
+        this.gson = gson;
     }
 
     public void doBackup(Endpoint endpoint) {
@@ -67,7 +72,7 @@ public class EndpointBackupServiceFile implements EndpointBackupService {
         final String fileName = pathName + "/" + fileNameGenerator.fromPath(pathName).concat(fileExtensionProperty.getFileExtension());
 
         final EndpointDto endpointDto = new EndpointDto(endpoint, fromJsonStringToObjectConverter);
-        final String endpointJson = jsonFormatterPretty.format(new Gson().toJson(endpointDto));
+        final String endpointJson = jsonFormatterPretty.format(gson.toJson(endpointDto));
 
         try {
             Files.createDirectories(Paths.get(pathName));

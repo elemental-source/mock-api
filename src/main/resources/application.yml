@@ -35,8 +35,14 @@ api:
       host: "http://frenzy-br-integration-blue.aws.elo7.io/frenzy"
       pattern: "/frenzy"
       prefixPath: "frenzy"
-
-
+    -
+      host: "http://shipping7-api.kube.elo7aws.com.br"
+      pattern: "/shipping7"
+      prefixPath: "shipping7"
+    -
+      host: "http://sandbox-api.pay7.com.br"
+      pattern: "/pay7"
+      prefixPath: "pay7"
 # Paths of json
 file:
   # Look for this path to find json with a request

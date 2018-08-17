@@ -33,6 +33,8 @@ public class GenericApiControllerExternalIntegrationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+    @Autowired
+    private Gson gson;
 
     @Value("${file.base}")
     private String fileBase;
@@ -82,9 +84,9 @@ public class GenericApiControllerExternalIntegrationTest {
                 Paths.get(resource.getAbsolutePath(), httpMethod.name().toLowerCase(), url, "1" + fileExtension)
                         .toAbsolutePath().toString();
 
-        final EndpointDto endpointDto = new Gson().fromJson(getJson(fileName), EndpointDto.class);
-        final String requestJson = new Gson().toJson(endpointDto.getRequest().getBody());
-        final String responseJson = new Gson().toJson(endpointDto.getResponse().getBody());
+        final EndpointDto endpointDto = gson.fromJson(getJson(fileName), EndpointDto.class);
+        final String requestJson = gson.toJson(endpointDto.getRequest().getBody());
+        final String responseJson = gson.toJson(endpointDto.getResponse().getBody());
 
         final HttpHeaders httpHeaders = headers.filter(mapHeaders -> !mapHeaders.isEmpty()).map(map -> {
             final HttpHeaders result = new HttpHeaders();

@@ -1,6 +1,9 @@
 package br.com.elementalsource.mock.infra.component;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -18,10 +21,10 @@ public class CompareMapTest {
     @Test
     public void shouldBeEqualsWhenCompareValueMaps() {
         // given
-        final ImmutableMap<String, String> map = ImmutableMap.<String, String>builder()
+        final Multimap<String, String> map = ImmutableMultimap.<String,String>builder()
                 .put("name", "Paul")
                 .build();
-        final ImmutableMap<String, String> mapToCompare = ImmutableMap.<String, String>builder()
+        final Multimap<String, String> mapToCompare = ImmutableMultimap.<String,String>builder()
                 .put("name", "Paul")
                 .build();
 
@@ -35,10 +38,10 @@ public class CompareMapTest {
     @Test
     public void shouldBeEqualsWhenCompareValueMapsWhereHaveMoreAttributesInComparation() {
         // given
-        final ImmutableMap<String, String> map = ImmutableMap.<String, String>builder()
+        final Multimap<String, String> map = ImmutableMultimap.<String,String>builder()
                 .put("name", "Paul")
                 .build();
-        final ImmutableMap<String, String> mapToCompare = ImmutableMap.<String, String>builder()
+        final Multimap<String, String> mapToCompare = ImmutableMultimap.<String,String>builder()
                 .put("name", "Paul")
                 .put("age", "15")
                 .build();
@@ -53,11 +56,11 @@ public class CompareMapTest {
     @Test
     public void shouldNotBeEqualsWhenCompareValueMapsWhereHaveLessAttributesInComparation() {
         // given
-        final ImmutableMap<String, String> map = ImmutableMap.<String, String>builder()
+        final Multimap<String, String> map = ImmutableMultimap.<String,String>builder()
                 .put("name", "Paul")
                 .put("age", "15")
                 .build();
-        final ImmutableMap<String, String> mapToCompare = ImmutableMap.<String, String>builder()
+        final Multimap<String, String> mapToCompare = ImmutableMultimap.<String,String>builder()
                 .put("name", "Paul")
                 .build();
 
@@ -71,11 +74,11 @@ public class CompareMapTest {
     @Test
     public void shouldNotBeEqualsWhenThereDifferentValues() {
         // given
-        final ImmutableMap<String, String> map = ImmutableMap.<String, String>builder()
+        final Multimap<String, String> map = ImmutableMultimap.<String,String>builder()
                 .put("name", "Paul")
                 .put("age", "15")
                 .build();
-        final ImmutableMap<String, String> mapToCompare = ImmutableMap.<String, String>builder()
+        final Multimap<String, String> mapToCompare = ImmutableMultimap.<String,String>builder()
                 .put("name", "Paul")
                 .put("age", "25")
                 .build();

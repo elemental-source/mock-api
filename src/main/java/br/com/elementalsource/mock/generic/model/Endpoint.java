@@ -1,5 +1,6 @@
 package br.com.elementalsource.mock.generic.model;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.Multimap;
 
 public class Endpoint implements Comparable<Endpoint> {
 
@@ -95,7 +97,7 @@ public class Endpoint implements Comparable<Endpoint> {
 			this.response = response;
 		}
 
-		public Builder withRequest(Optional<Map<String, String>> requestQuery, Optional<String> requestBody) {
+		public Builder withRequest(Optional<Multimap<String, String>> requestQuery, Optional<String> requestBody) {
 			return withRequest(new Request.Builder(this.request).withQuery(requestQuery).withBody(requestBody).build());
 		}
 

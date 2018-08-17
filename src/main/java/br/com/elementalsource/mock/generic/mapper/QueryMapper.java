@@ -9,9 +9,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLDecoder;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 
 @Component
 public class QueryMapper {
@@ -24,7 +27,7 @@ public class QueryMapper {
         this.decoderFunction = decoderFunction;
     }
 
-    public Optional<Map<String, String>> mapper(final String queryRequest) {
+    public Optional<Multimap<String, String>> mapper(final String queryRequest) {
         return Optional
                 .ofNullable(queryRequest)
                 .map(query -> {
@@ -48,8 +51,14 @@ public class QueryMapper {
 
                 })
                 .filter(parameters -> !parameters.isEmpty())
-                .map(MultiValueMap::toSingleValueMap)
+                .map(this::asModifiableMap)
                 .map(decoderFunction::decode);
+    }
+
+    private Multimap<String, String> asModifiableMap(MultiValueMap<String,String> map){
+        Multimap<String, String> multimap = ArrayListMultimap.create();
+        map.forEach(multimap::putAll);
+        return multimap;
     }
 
 }
