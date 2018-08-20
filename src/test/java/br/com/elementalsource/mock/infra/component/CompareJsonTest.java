@@ -37,6 +37,59 @@ public class CompareJsonTest {
     }
 
     @Test
+    public void shouldBeEquivalentWhenIsEqualButInDifferentOrder() throws IOException {
+        // given
+        final String jsonKey = "{\"id\": 10, \"name\":\"banana\"}";
+        final String jsonToCompare = "{\"name\":\"banana\", \"id\": 10}";
+
+        // when
+        final Boolean equivalent = compareJson.isEquivalent(jsonKey, jsonToCompare);
+
+        // then
+        assertTrue(equivalent);
+    }
+
+    @Test
+    public void shouldBeEquivalentWhenIsEqualButAnElementIsAList() throws IOException {
+        // given
+        final String jsonKey = "{\"id\": 10, \"values\": [{\"b\":2, \"a\":1}]}";
+        final String jsonToCompare = "{\"id\": 10, \"values\": [{\"a\":1, \"b\":2}]}";
+
+        // when
+        final Boolean equivalent = compareJson.isEquivalent(jsonKey, jsonToCompare);
+
+        // then
+        assertTrue(equivalent);
+    }
+
+    @Test
+    public void shouldBeDifferentWhenIsEqualButSecondListHasFewerElements() throws IOException {
+        // given
+        final String jsonKey = "{\"id\": 10, \"values\": [{\"b\":2, \"a\":1}, {\"b\":2, \"a\":1}]}";
+        final String jsonToCompare = "{\"id\": 10, \"values\": [{\"a\":1, \"b\":2}]}";
+
+        // when
+        final Boolean equivalent = compareJson.isEquivalent(jsonKey, jsonToCompare);
+
+        // then
+        assertFalse(equivalent);
+    }
+
+    @Test
+    public void shouldBeEquivalentWhenIsEqualButAnElementIsAListOfMaps() throws IOException {
+        // given
+        final String jsonKey = "{\"id\": 10, \"values\": [{\"a\":1, \"b\":2},{\"c\":3, \"d\":3}]}";
+        final String jsonToCompare = "{\"id\": 10, \"values\": [{\"d\":3, \"c\":3},{\"a\":1, \"b\":2}]}";
+
+        // when
+        final Boolean equivalent = compareJson.isEquivalent(jsonKey, jsonToCompare);
+
+        // then
+        assertTrue(equivalent);
+    }
+
+
+    @Test
     public void shouldBeEquivalentWhenExistsFieldsIgnoreds() throws IOException {
         // given
         final String jsonKey = "{\"id\": 10}";

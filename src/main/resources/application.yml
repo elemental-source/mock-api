@@ -8,9 +8,9 @@ api:
 #    - "Content-Type"
 
   # When is not find in repository, then will try to do a request in this host
-  host: "http://tyrion-us-dev.kube.aws.elo7.io"
+  host: "https://sandbox-api.pay7.com.br"
 
-  acceptedHeaders: "Accept,User-Agent,Content-Type,X-Auth-User-Id"
+  acceptedHeaders: "Accept,User-Agent,Content-Type,X-Auth-User-Id,authorization"
 
   # Default headers to do a request
   defaultHeaders:
@@ -40,7 +40,7 @@ api:
       pattern: "/shipping7"
       prefixPath: "shipping7"
     -
-      host: "http://sandbox-api.pay7.com.br"
+      host: "https://sandbox-api.pay7.com.br"
       pattern: "/pay7"
       prefixPath: "pay7"
 # Paths of json

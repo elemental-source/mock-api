@@ -1,0 +1,233 @@
+{
+  "request": {
+    "headers": {
+      "content-type": "application/json; charset\u003dUTF-8",
+      "accept": "application/json",
+      "authorization": "Bearer d6a5fefa-17e5-499a-9a2d-f0e6c5d1f617",
+      "cache-control": "no-cache",
+      "pragma": "no-cache",
+      "user-agent": "Java/1.8.0_66",
+      "host": "localhost:9090",
+      "connection": "keep-alive",
+      "content-length": "1756"
+    },
+    "body": {
+      "customer": {
+        "reference_key": "459696",
+        "name": "Acceptance Seller",
+        "birth_date": "1990-11-21",
+        "document": {
+          "type": "CNPJ",
+          "number": "25185816000168"
+        },
+        "email": "kasey@nitzsche.org",
+        "gender": "FEMALE",
+        "home_phone": {
+          "area_code": "11",
+          "number": "965237788"
+        },
+        "address": {
+          "street": "Alameda Ministro Rocha Azevedo",
+          "number": "12345",
+          "complement": "apto 1",
+          "neighborhood": "Cerqueira César",
+          "city": "São Paulo",
+          "state": "SP",
+          "zip_code": "69900058",
+          "country": "BR"
+        }
+      },
+      "order": {
+        "reference_key": "19A422-shipment",
+        "description": "Pagamento de postagem do Elo7 - Código de cobrança: 19A422-shipment",
+        "amount": {
+          "items_amount": 3449,
+          "shipping_amount": 0,
+          "additional_amount": 0,
+          "total_amount": 3449
+        },
+        "items": [],
+        "shipping_address": {
+          "street": "Alameda Ministro Rocha Azevedo",
+          "number": "12345",
+          "complement": "apto 1",
+          "neighborhood": "Cerqueira César",
+          "city": "São Paulo",
+          "state": "SP",
+          "zip_code": "69900058",
+          "country": "BR"
+        },
+        "security_info": {
+          "ip": "127.0.0.1",
+          "session_id": "6804A4D318D3334D92C92A470B0746AB"
+        }
+      },
+      "recipient": {
+        "key": "USR-57190C39226543C5A18D07743337C81E",
+        "liquid_amount": 0
+      },
+      "payments": [
+        {
+          "method": "CREDIT_CARD",
+          "amount": {
+            "net_amount": 3449,
+            "gross_amount": 3449,
+            "paid_amount": 0
+          },
+          "credit_card": {
+            "hash": "lkk9PRGusO6padSM3nT6hXdA/GZWHYPn+W71zQ8jqAsdagSQzLp2CON/jSGrMBVYrGVGCx20LsU4raLM8kniB219kNkICMsxSquq7lxjUW0775sNQrcsWD0q+hT50cNI5mTitphU2UpSdLeE2KW2t+ui46VQTLfiMHBt8hBEVtA\u003d",
+            "holder": {
+              "name": "Test ELO7",
+              "birth_date": "1982-10-15",
+              "document": {
+                "type": "CPF",
+                "number": "12312312387"
+              },
+              "phone": {
+                "area_code": "11",
+                "number": "965237788"
+              },
+              "billing_address": {
+                "street": "Alameda Ministro Rocha Azevedo",
+                "number": "12345",
+                "complement": "apto 1",
+                "neighborhood": "São Paulo",
+                "city": "São Paulo",
+                "state": "SP",
+                "zip_code": "69900058",
+                "country": "BR"
+              }
+            }
+          },
+          "installments_count": 1
+        }
+      ],
+      "commissions": [],
+      "antecipation": false
+    }
+  },
+  "response": {
+    "body": {
+      "key": "TRA-5CCF2F8EFBB448CE8A1A3D1E1A804FF5",
+      "merchant": {
+        "key": "USR-57190C39226543C5A18D07743337C81E"
+      },
+      "order": {
+        "reference_key": "19A422-shipment",
+        "description": "Pagamento de postagem do Elo7 - Código de cobrança: 19A422-shipment",
+        "amount": {
+          "items_amount": 3449,
+          "shipping_amount": 0,
+          "additional_amount": 0,
+          "total_amount": 3449
+        },
+        "items": [],
+        "shipping_address": {
+          "street": "Alameda Ministro Rocha Azevedo",
+          "number": "12345",
+          "complement": "apto 1",
+          "neighborhood": "Cerqueira César",
+          "city": "São Paulo",
+          "state": "SP",
+          "zip_code": "69900058",
+          "country": "BR"
+        },
+        "security_info": {
+          "ip": "127.0.0.1",
+          "session_id": "6804A4D318D3334D92C92A470B0746AB"
+        }
+      },
+      "customer": {
+        "reference_key": "459696",
+        "name": "Acceptance Seller",
+        "birth_date": "1990-11-21",
+        "document": {
+          "type": "CNPJ",
+          "number": "25185816000168"
+        },
+        "email": "olen_lubowitz@nikolaus.org",
+        "gender": "FEMALE",
+        "home_phone": {
+          "area_code": "11",
+          "number": "965237788"
+        },
+        "address": {
+          "street": "Alameda Ministro Rocha Azevedo",
+          "number": "12345",
+          "complement": "apto 1",
+          "neighborhood": "Cerqueira César",
+          "city": "São Paulo",
+          "state": "SP",
+          "zip_code": "69900058",
+          "country": "BR"
+        }
+      },
+      "payments": [
+        {
+          "method": "CREDIT_CARD",
+          "key": "PAY-56425C77EB5C4EBA8BA73A2E6026F01C",
+          "amount": {
+            "net_amount": 3449,
+            "gross_amount": 3449
+          },
+          "status": {
+            "value": "PROCESSING",
+            "updated_at": "2018-08-17T19:48:20.381Z"
+          },
+          "credit_card": {
+            "first_digits": "453966",
+            "last_digits": "4243",
+            "brand": "VISA",
+            "holder": {
+              "name": "Test ELO7",
+              "birth_date": "1982-10-15",
+              "document": {
+                "type": "CPF",
+                "number": "12312312387"
+              },
+              "phone": {
+                "area_code": "11",
+                "number": "965237788"
+              },
+              "billing_address": {
+                "street": "Alameda Ministro Rocha Azevedo",
+                "number": "12345",
+                "complement": "apto 1",
+                "neighborhood": "São Paulo",
+                "city": "São Paulo",
+                "state": "SP",
+                "zip_code": "69900058",
+                "country": "BR"
+              }
+            },
+            "one_click_to_buy_key": "CTB-9965761B2D8447C0B66FF0A149C04EC9"
+          },
+          "installments_count": 1
+        }
+      ],
+      "recipient": {
+        "key": "USR-57190C39226543C5A18D07743337C81E"
+      },
+      "fee": {
+        "amount": 0
+      },
+      "commissions": [],
+      "status": {
+        "value": "CREATED",
+        "updated_at": "2018-08-17T19:48:20.376Z"
+      },
+      "status_history": [
+        {
+          "value": "CREATED",
+          "created_at": "2018-08-17T19:48:20.376Z"
+        }
+      ],
+      "amount": {
+        "net_amount": 3449,
+        "gross_amount": 3449
+      }
+    },
+    "httpStatus": 201
+  }
+}
+

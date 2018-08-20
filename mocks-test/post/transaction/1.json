@@ -1,0 +1,277 @@
+{
+  "request": {
+    "headers": {
+      "content-type": "application/json; charset\u003dUTF-8",
+      "accept": "application/json",
+      "authorization": "Bearer d6a5fefa-17e5-499a-9a2d-f0e6c5d1f617",
+      "cache-control": "no-cache",
+      "pragma": "no-cache",
+      "user-agent": "Java/1.8.0_66",
+      "host": "localhost:9090",
+      "connection": "keep-alive",
+      "content-length": "2089"
+    },
+    "body": {
+      "customer": {
+        "reference_key": "459691",
+        "name": "Acceptance Buyer",
+        "birth_date": "1990-11-21",
+        "document": {
+          "type": "CPF",
+          "number": "12312312387"
+        },
+        "email": "sigrid@auerskiles.info",
+        "gender": "FEMALE",
+        "home_phone": {
+          "area_code": "11",
+          "number": "965237788"
+        },
+        "address": {
+          "street": "Alameda Ministro Rocha Azevedo",
+          "number": "12345",
+          "complement": "apto 1",
+          "neighborhood": "Cerqueira César",
+          "city": "São Paulo",
+          "state": "SP",
+          "zip_code": "69900058",
+          "country": "BR"
+        }
+      },
+      "order": {
+        "reference_key": "9A1D08",
+        "description": "Pedido de compra número 9A1D08",
+        "amount": {
+          "items_amount": 2000,
+          "shipping_amount": 550,
+          "additional_amount": 0,
+          "total_amount": 2550
+        },
+        "items": [
+          {
+            "name": "default order item name",
+            "quantity": 2,
+            "unitary_amount": 1000
+          }
+        ],
+        "shipping_address": {
+          "street": "Alameda Ministro Rocha Azevedo",
+          "number": "12345",
+          "complement": "apto 1",
+          "neighborhood": "Cerqueira César",
+          "city": "São Paulo",
+          "state": "SP",
+          "zip_code": "69900058",
+          "country": "BR"
+        },
+        "security_info": {
+          "ip": "127.0.0.1",
+          "session_id": "E15E2E866AAC8FE28BD13C3D09959129"
+        }
+      },
+      "recipient": {
+        "key": "USR-47E2674591984DACB5C0B822D1539B9D",
+        "liquid_amount": 0
+      },
+      "payments": [
+        {
+          "method": "CREDIT_CARD",
+          "amount": {
+            "net_amount": 2550,
+            "gross_amount": 2550,
+            "paid_amount": 0
+          },
+          "credit_card": {
+            "hash": "T/m/OU8Wpfzxsgpmh33xhrMqEarWESZSMxNqtn1UtYL+aSgfcQr6mfuUVySGOgfydasZ0DKGQ323mH1bKHI/b8wPkfghQI2JUbp2gjLGZtgXn5tg2S4yi/EGREpiYx3J3qMN3/BNMHQavDEE841yOcOve/P6r9VS4KuPXVkBi5o\u003d",
+            "holder": {
+              "name": "Test ELO7",
+              "birth_date": "1982-10-15",
+              "document": {
+                "type": "CPF",
+                "number": "12312312387"
+              },
+              "phone": {
+                "area_code": "11",
+                "number": "965237788"
+              },
+              "billing_address": {
+                "street": "Alameda Ministro Rocha Azevedo",
+                "number": "12345",
+                "complement": "apto 1",
+                "neighborhood": "São Paulo",
+                "city": "São Paulo",
+                "state": "SP",
+                "zip_code": "69900058",
+                "country": "BR"
+              }
+            }
+          },
+          "installments_count": 1
+        }
+      ],
+      "commissions": [
+        {
+          "amount": {
+            "fixed": 179
+          },
+          "recipient": {
+            "key": "USR-57190C39226543C5A18D07743337C81E",
+            "liquid_amount": 0
+          },
+          "description": "Comissão de pedido do Elo7"
+        },
+        {
+          "amount": {
+            "fixed": 484
+          },
+          "recipient": {
+            "key": "USR-57190C39226543C5A18D07743337C81E",
+            "liquid_amount": 0
+          },
+          "description": "Pagamento de postagem do Elo7: 19A421-shipment"
+        }
+      ],
+      "antecipation": false
+    }
+  },
+  "response": {
+    "body": {
+      "key": "TRA-D30196384E764DA1994FD967D8EF9205",
+      "merchant": {
+        "key": "USR-57190C39226543C5A18D07743337C81E"
+      },
+      "order": {
+        "reference_key": "9A1D08",
+        "description": "Pedido de compra número 9A1D08",
+        "amount": {
+          "items_amount": 2000,
+          "shipping_amount": 550,
+          "additional_amount": 0,
+          "total_amount": 2550
+        },
+        "items": [
+          {
+            "name": "default order item name",
+            "quantity": 2,
+            "unitary_amount": 1000
+          }
+        ],
+        "shipping_address": {
+          "street": "Alameda Ministro Rocha Azevedo",
+          "number": "12345",
+          "complement": "apto 1",
+          "neighborhood": "Cerqueira César",
+          "city": "São Paulo",
+          "state": "SP",
+          "zip_code": "69900058",
+          "country": "BR"
+        },
+        "security_info": {
+          "ip": "127.0.0.1",
+          "session_id": "E15E2E866AAC8FE28BD13C3D09959129"
+        }
+      },
+      "customer": {
+        "reference_key": "459691",
+        "name": "Acceptance Buyer",
+        "birth_date": "1990-11-21",
+        "document": {
+          "type": "CPF",
+          "number": "12312312387"
+        },
+        "email": "comprador@elo7.com",
+        "gender": "FEMALE",
+        "home_phone": {
+          "area_code": "11",
+          "number": "965237788"
+        },
+        "address": {
+          "street": "Alameda Ministro Rocha Azevedo",
+          "number": "12345",
+          "complement": "apto 1",
+          "neighborhood": "Cerqueira César",
+          "city": "São Paulo",
+          "state": "SP",
+          "zip_code": "69900058",
+          "country": "BR"
+        }
+      },
+      "payments": [
+        {
+          "method": "CREDIT_CARD",
+          "key": "PAY-BB50BA49DF2D427394C66682DEC829B9",
+          "amount": {
+            "net_amount": 2550,
+            "gross_amount": 2550
+          },
+          "status": {
+            "value": "PROCESSING",
+            "updated_at": "2018-08-17T19:47:49.816Z"
+          },
+          "credit_card": {
+            "first_digits": "453966",
+            "last_digits": "4243",
+            "brand": "VISA",
+            "holder": {
+              "name": "Test ELO7",
+              "birth_date": "1982-10-15",
+              "document": {
+                "type": "CPF",
+                "number": "12312312387"
+              },
+              "phone": {
+                "area_code": "11",
+                "number": "965237788"
+              },
+              "billing_address": {
+                "street": "Alameda Ministro Rocha Azevedo",
+                "number": "12345",
+                "complement": "apto 1",
+                "neighborhood": "São Paulo",
+                "city": "São Paulo",
+                "state": "SP",
+                "zip_code": "69900058",
+                "country": "BR"
+              }
+            },
+            "one_click_to_buy_key": "CTB-8FF067F87D07446BA9F2938370911FAA"
+          },
+          "installments_count": 1
+        }
+      ],
+      "recipient": {
+        "key": "USR-47E2674591984DACB5C0B822D1539B9D"
+      },
+      "fee": {
+        "amount": 0
+      },
+      "commissions": [
+        {
+          "amount": {
+            "percentual": 7.01961,
+            "fixed": 179
+          },
+          "recipient": {
+            "key": "USR-57190C39226543C5A18D07743337C81E"
+          },
+          "description": "Comissão de pedido do Elo7"
+        }
+      ],
+      "status": {
+        "value": "CREATED",
+        "updated_at": "2018-08-17T19:47:49.809Z"
+      },
+      "status_history": [
+        {
+          "value": "CREATED",
+          "created_at": "2018-08-17T19:47:49.810Z"
+        }
+      ],
+      "amount": {
+        "net_amount": 2550,
+        "gross_amount": 2550
+      }
+    },
+    "httpStatus": 201
+  }
+}
+

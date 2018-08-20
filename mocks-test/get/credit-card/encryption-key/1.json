@@ -1,0 +1,21 @@
+{
+  "request": {
+    "headers": {
+      "accept": "application/json",
+      "authorization": "Bearer d6a5fefa-17e5-499a-9a2d-f0e6c5d1f617",
+      "cache-control": "no-cache",
+      "pragma": "no-cache",
+      "user-agent": "Java/1.8.0_66",
+      "host": "localhost:9090",
+      "connection": "keep-alive"
+    },
+    "body": {}
+  },
+  "response": {
+    "body": {
+      "public_key": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDI8ZlqvWG12zrCCBv5hipctUh5\nuC5Q+IOuDxnAMWg3YeZLw33LMgUZzkbAjFJp85cn1To762xpHEW5iO7A2Nmg+/wW\nCO7vhWR3gYwMq+qV+2O4Sb3VhlfgmjImLYlkQGlchVgcBzcZjLpICATXFz3Ocrv5\nLN8zIieValfU+lMrkQIDAQAB\n-----END PUBLIC KEY-----\n"
+    },
+    "httpStatus": 200
+  }
+}
+
