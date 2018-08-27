@@ -1,6 +1,7 @@
 package br.com.elementalsource.mock.generic.mapper;
 
 import br.com.elementalsource.mock.generic.model.Endpoint;
+import br.com.elementalsource.mock.infra.component.gson.GsonFactory;
 import br.com.elementalsource.mock.infra.component.impl.FromJsonStringToObjectConverterImpl;
 import br.com.elementalsource.mock.generic.model.template.EndpointTemplate;
 import br.com.six2six.fixturefactory.Fixture;
@@ -16,6 +17,8 @@ import static org.junit.Assert.*;
 
 public class EndpointDtoTest {
 
+    private static Gson gson = new GsonFactory().gson();
+
     @BeforeClass
     public static void initClass() {
         FixtureFactoryLoader.loadTemplates("br.com.elementalsource.mock.generic.model.template");
@@ -27,7 +30,7 @@ public class EndpointDtoTest {
         final String json = "{\"request\":{\"body\":[{\"run\":\"7\"}]},\"response\":{\"body\":[{\"age\":8}]}}";
 
         // when
-        final EndpointDto endpointDto = new Gson().fromJson(json, EndpointDto.class);
+        final EndpointDto endpointDto = gson.fromJson(json, EndpointDto.class);
         final Endpoint endpoint = endpointDto.toModel(RequestMethod.GET, "/product");
 
         // then
@@ -44,7 +47,7 @@ public class EndpointDtoTest {
         final String json = "{\"request\":{\"body\":[{\"run\":\"7\"}]},\"response\":{\"body\":[{\"age\":8}]}}";
 
         // when
-        final EndpointDto endpointDto = new Gson().fromJson(json, EndpointDto.class);
+        final EndpointDto endpointDto = gson.fromJson(json, EndpointDto.class);
         final Endpoint endpoint = endpointDto.toModel(RequestMethod.GET, "/product");
 
         // then
@@ -82,7 +85,7 @@ public class EndpointDtoTest {
 
         // when
         final EndpointDto endpointDto = new EndpointDto(endpoint, new FromJsonStringToObjectConverterImpl());
-        final String json = new Gson().toJson(endpointDto);
+        final String json = gson.toJson(endpointDto);
 
         // then
         JSONAssert.assertEquals(expectedJson, json, false);
@@ -114,7 +117,7 @@ public class EndpointDtoTest {
 
         // when
         final EndpointDto endpointDto = new EndpointDto(endpoint, new FromJsonStringToObjectConverterImpl());
-        final String json = new Gson().toJson(endpointDto);
+        final String json = gson.toJson(endpointDto);
 
         // then
         JSONAssert.assertEquals(expectedJson, json, false);
@@ -154,7 +157,7 @@ public class EndpointDtoTest {
 
         // when
         final EndpointDto endpointDto = new EndpointDto(endpoint, new FromJsonStringToObjectConverterImpl());
-        final String json = new Gson().toJson(endpointDto);
+        final String json = gson.toJson(endpointDto);
 
         // then
         JSONAssert.assertEquals(expectedJson, json, false);

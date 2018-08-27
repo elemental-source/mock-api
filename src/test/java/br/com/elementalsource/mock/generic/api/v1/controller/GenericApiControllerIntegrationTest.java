@@ -24,6 +24,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -37,6 +39,8 @@ public class GenericApiControllerIntegrationTest {
 
     @Autowired
     private QueryStringBuilder queryStringBuilder;
+    @Autowired
+    private Gson gson;
 
     @Value("${file.extension}")
     private String fileExtension;
@@ -68,7 +72,7 @@ public class GenericApiControllerIntegrationTest {
 
         final String endpointJson = getJson(fileName);
 
-        final EndpointDto endpointDto = new Gson().fromJson(endpointJson, EndpointDto.class);
+        final EndpointDto endpointDto = gson.fromJson(endpointJson, EndpointDto.class);
         final Endpoint endpoint = endpointDto.toModel(RequestMethod.GET, uri);
         final String parameters = endpoint
                 .getRequest()
@@ -78,7 +82,7 @@ public class GenericApiControllerIntegrationTest {
                 .map(""::concat)
                 .orElse("");
 
-        final String responseJson = new Gson().toJson(endpointDto.getResponse().getBody());
+        final String responseJson = gson.toJson(endpointDto.getResponse().getBody());
 
         // when
         final ResponseEntity<String> response = restTemplate.getForEntity(uri.concat(parameters), String.class);
@@ -96,8 +100,8 @@ public class GenericApiControllerIntegrationTest {
                 Paths.get(resource.getAbsolutePath(), "get", uri, "1" + fileExtension)
                         .toAbsolutePath().toString();
         final String endpointJson = getJson(fileName);
-        final EndpointDto endpointDto = new Gson().fromJson(endpointJson, EndpointDto.class);
-        final String responseJson = new Gson().toJson(endpointDto.getResponse().getBody());
+        final EndpointDto endpointDto = gson.fromJson(endpointJson, EndpointDto.class);
+        final String responseJson = gson.toJson(endpointDto.getResponse().getBody());
 
         // when
         final ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
@@ -116,8 +120,8 @@ public class GenericApiControllerIntegrationTest {
                 Paths.get(resource.getAbsolutePath(), "get", uri, "1" + fileExtension)
                         .toAbsolutePath().toString();
         final String endpointJson = getJson(fileName);
-        final EndpointDto endpointDto = new Gson().fromJson(endpointJson, EndpointDto.class);
-        final String responseJson = new Gson().toJson(endpointDto.getResponse().getBody());
+        final EndpointDto endpointDto = gson.fromJson(endpointJson, EndpointDto.class);
+        final String responseJson = gson.toJson(endpointDto.getResponse().getBody());
 
         // when
         final ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
@@ -136,8 +140,8 @@ public class GenericApiControllerIntegrationTest {
         final String fileName =
                 Paths.get(resource.getAbsolutePath(), "get", uri, "1" + fileExtension)
                         .toAbsolutePath().toString();
-        final EndpointDto endpointDto = new Gson().fromJson(getJson(fileName), EndpointDto.class);
-        final String responseJson = new Gson().toJson(endpointDto.getResponse().getBody());
+        final EndpointDto endpointDto = gson.fromJson(getJson(fileName), EndpointDto.class);
+        final String responseJson = gson.toJson(endpointDto.getResponse().getBody());
 
         // when
         final ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
@@ -155,8 +159,8 @@ public class GenericApiControllerIntegrationTest {
         final String fileName =
                 Paths.get(resource.getAbsolutePath(), "get", uri, "2" + fileExtension)
                         .toAbsolutePath().toString();
-        final EndpointDto endpointDto = new Gson().fromJson(getJson(fileName), EndpointDto.class);
-        final String responseJson = new Gson().toJson(endpointDto.getResponse().getBody());
+        final EndpointDto endpointDto = gson.fromJson(getJson(fileName), EndpointDto.class);
+        final String responseJson = gson.toJson(endpointDto.getResponse().getBody());
         final String query = queryStringBuilder.fromMap(endpointDto.getRequest().getQuery());
 
         // when
@@ -198,9 +202,9 @@ public class GenericApiControllerIntegrationTest {
                 Paths.get(resource.getAbsolutePath(), httpMethod.name().toLowerCase(), uri, caseX + fileExtension)
                         .toAbsolutePath().toString();
 
-        final EndpointDto endpointDto = new Gson().fromJson(getJson(fileName), EndpointDto.class);
-        final String requestJson = new Gson().toJson(endpointDto.getRequest().getBody());
-        final String responseJson = new Gson().toJson(endpointDto.getResponse().getBody());
+        final EndpointDto endpointDto = gson.fromJson(getJson(fileName), EndpointDto.class);
+        final String requestJson = gson.toJson(endpointDto.getRequest().getBody());
+        final String responseJson = gson.toJson(endpointDto.getResponse().getBody());
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

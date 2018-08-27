@@ -50,7 +50,7 @@ public class ApiPropertyTest {
     @Test
     public void shouldLoadUriConfigurations() {
         // given
-        final UriConfiguration uriConfiguration = new UriConfiguration("http://www.mocky.io", Pattern.compile("/v2/57fbd6280f0000ed154fd470", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE), false);
+        final UriConfiguration uriConfiguration = new UriConfiguration("http://www.mocky.io", Pattern.compile("/v2/57fbd6280f0000ed154fd470", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE), false, "");
 
         // when
         final List<UriConfiguration> uriConfigurations = apiProperty.getUriConfigurations();

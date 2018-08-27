@@ -1,12 +1,15 @@
 package br.com.elementalsource.mock.generic.mapper;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Multimap;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -28,7 +31,7 @@ public class QueryMapperTest {
         final String queryRequest = null;
 
         // when
-        final Optional<Map<String, String>> result = queryMapper.mapper(queryRequest);
+        final Optional<Multimap<String, String>> result = queryMapper.mapper(queryRequest);
 
         // then
         assertFalse(result.isPresent());
@@ -40,7 +43,7 @@ public class QueryMapperTest {
         final String queryRequest = "";
 
         // when
-        final Optional<Map<String, String>> result = queryMapper.mapper(queryRequest);
+        final Optional<Multimap<String, String>> result = queryMapper.mapper(queryRequest);
 
         // then
         assertFalse(result.isPresent());
@@ -55,7 +58,7 @@ public class QueryMapperTest {
                 .build();
 
         // when
-        final Optional<Map<String, String>> result = queryMapper.mapper(queryRequest);
+        final Optional<Multimap<String, String>> result = queryMapper.mapper(queryRequest);
 
         // then
         assertTrue(result.isPresent());
@@ -72,7 +75,7 @@ public class QueryMapperTest {
                 .build();
 
         // when
-        final Optional<Map<String, String>> result = queryMapper.mapper(queryRequest);
+        final Optional<Multimap<String, String>> result = queryMapper.mapper(queryRequest);
 
         // then
         assertTrue(result.isPresent());

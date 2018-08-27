@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,9 +36,13 @@ public class EndpointBackupServiceFile implements EndpointBackupService {
     private final FromJsonStringToObjectConverter fromJsonStringToObjectConverter;
     private final JsonFormatterPretty jsonFormatterPretty;
     private final EndpointRepository endpointRepository;
+    private final Gson gson;
 
     @Autowired
-    public EndpointBackupServiceFile(@Qualifier("FilePropertyBackup") FileProperty fileProperty, FileExtensionProperty fileExtensionProperty, @Qualifier("BaseFileNameBuilderBackup") BaseFileNameBuilder baseFileNameBuilder, FileNameGenerator fileNameGenerator, FromJsonStringToObjectConverter fromJsonStringToObjectConverter, JsonFormatterPretty jsonFormatterPretty, @Qualifier("EndpointRepositoryBackup") EndpointRepository endpointRepository) {
+    public EndpointBackupServiceFile(@Qualifier("FilePropertyBackup") FileProperty fileProperty, FileExtensionProperty fileExtensionProperty,
+                                     @Qualifier("BaseFileNameBuilderBackup") BaseFileNameBuilder baseFileNameBuilder, FileNameGenerator fileNameGenerator,
+                                     FromJsonStringToObjectConverter fromJsonStringToObjectConverter, JsonFormatterPretty jsonFormatterPretty,
+                                     @Qualifier("EndpointRepositoryBackup") EndpointRepository endpointRepository, Gson gson) {
         this.fileProperty = fileProperty;
         this.fileExtensionProperty = fileExtensionProperty;
         this.baseFileNameBuilder = baseFileNameBuilder;
@@ -47,11 +50,12 @@ public class EndpointBackupServiceFile implements EndpointBackupService {
         this.fromJsonStringToObjectConverter = fromJsonStringToObjectConverter;
         this.jsonFormatterPretty = jsonFormatterPretty;
         this.endpointRepository = endpointRepository;
+        this.gson = gson;
     }
 
     public void doBackup(Endpoint endpoint) {
         final Boolean isNeedToCreateABackup = endpointRepository
-                .getByMethodAndRequest(endpoint.getRequest())
+                .getByRequest(endpoint.getRequest())
                 .map(e -> {
                     LOGGER.info("Existent backup not replaced [id=" + e.getId().orElse("no_id") + "]");
                     return false;
@@ -64,11 +68,11 @@ public class EndpointBackupServiceFile implements EndpointBackupService {
     private Boolean execute(final Endpoint endpoint) {
         final Request request = endpoint.getRequest();
 
-        final String pathName = baseFileNameBuilder.buildPath(fileProperty.getFileBase(), request.getMethod().name().toLowerCase(), request.getUri());
+        final String pathName = baseFileNameBuilder.buildPath(fileProperty.getFileBase(request), request.getMethod().name().toLowerCase(), request.getUri());
         final String fileName = pathName + "/" + fileNameGenerator.fromPath(pathName).concat(fileExtensionProperty.getFileExtension());
 
         final EndpointDto endpointDto = new EndpointDto(endpoint, fromJsonStringToObjectConverter);
-        final String endpointJson = jsonFormatterPretty.format(new Gson().toJson(endpointDto));
+        final String endpointJson = jsonFormatterPretty.format(gson.toJson(endpointDto));
 
         try {
             Files.createDirectories(Paths.get(pathName));
@@ -78,19 +82,6 @@ public class EndpointBackupServiceFile implements EndpointBackupService {
             LOGGER.error("Cannot backup endpoint {}", e);
         }
         return true;
-    }
-
-    public void cleanAllBackupData() {
-        try {
-            final String backupPath = fileProperty.getFileBase();
-            Files
-                    .list(Paths.get(backupPath))
-                    .map(path -> path.getFileName().toFile())
-                    .filter(file -> !file.getName().startsWith("."))
-                    .forEach(FileSystemUtils::deleteRecursively);
-        } catch (IOException e) {
-            LOGGER.error("Cannot list backup files {}", e);
-        }
     }
 
 }

@@ -5,7 +5,13 @@ import br.com.elementalsource.mock.infra.component.QueryStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import com.google.common.collect.Multimap;
 
 @Component
 public class QueryStringBuilderImpl implements QueryStringBuilder {
@@ -18,14 +24,13 @@ public class QueryStringBuilderImpl implements QueryStringBuilder {
     }
 
     @Override
-    public String fromMap(Map<String, String> queryMap) {
-        return queryMap
-                .entrySet()
-                .stream()
-                .map(entry -> "&".concat(entry.getKey()).concat("=").concat(entry.getValue()))
-                .reduce(String::concat)
-                .map(s -> "?" + s.substring(1, s.length()))
-                .orElse("");
+    public String fromMap(Multimap<String, String> queryMap) {
+
+        String queryString = queryMap.asMap().entrySet().stream().map(e -> {
+            return e.getValue().stream().map(v -> e.getKey() + "=" + v).collect(Collectors.joining("&"));
+        }).collect(Collectors.joining("&", "?", ""));
+
+        return queryString.length() > 1 ? queryString : "";
     }
 
 }

@@ -27,6 +27,8 @@ public class CaptureStateControllerIntegrationTest {
 
     @Autowired
     private MockMvc mvc;
+    @Autowired
+    private Gson gson;
 
     @MockBean
     private CaptureStateService captureStateService;
@@ -63,7 +65,7 @@ public class CaptureStateControllerIntegrationTest {
     public void shouldBeEnableCaptureMode() throws Exception {
         // given
         final CaptureState captureState = new CaptureState(true);
-        final String requestBody = new Gson().toJson(new CaptureStateDto(captureState));
+        final String requestBody = gson.toJson(new CaptureStateDto(captureState));
 
         given(captureStateService.enable())
                 .willReturn(captureState);
