@@ -6,9 +6,12 @@ import br.com.elementalsource.mock.infra.exception.impl.JsonApiApplicationExcept
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+
+import com.google.common.collect.Multimap;
 
 public class Request implements Comparable<Request> {
 
@@ -17,7 +20,7 @@ public class Request implements Comparable<Request> {
     private RequestMethod method;
     private String uri;
     private Optional<HttpHeaders> headers;
-    private Optional<Map<String, String>> query;
+    private Optional<Multimap<String, String>> query;
     private Optional<String> body;
 
     private Request() {
@@ -44,7 +47,7 @@ public class Request implements Comparable<Request> {
         return headers;
     }
 
-    public Optional<Map<String, String>> getQuery() {
+    public Optional<Multimap<String, String>> getQuery() {
         return query;
     }
 
@@ -54,7 +57,7 @@ public class Request implements Comparable<Request> {
 
     public Integer countQueryFields() {
         return getQuery()
-                .map(Map::size)
+                .map(Multimap::size)
                 .orElse(0);
     }
 
@@ -142,11 +145,11 @@ public class Request implements Comparable<Request> {
             return this;
         }
 
-        public Builder withQuery(Map<String, String> query) {
+        public Builder withQuery(Multimap<String, String> query) {
             return withQuery(Optional.ofNullable(query));
         }
 
-        public Builder withQuery(Optional<Map<String, String>> query) {
+        public Builder withQuery(Optional<Multimap<String, String>> query) {
             instance.query = query;
             return this;
         }

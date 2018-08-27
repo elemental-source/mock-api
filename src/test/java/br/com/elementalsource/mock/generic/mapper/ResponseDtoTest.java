@@ -1,6 +1,7 @@
 package br.com.elementalsource.mock.generic.mapper;
 
 import br.com.elementalsource.mock.generic.model.template.ResponseTemplate;
+import br.com.elementalsource.mock.infra.component.gson.GsonFactory;
 import br.com.elementalsource.mock.infra.component.impl.FromJsonStringToObjectConverterImpl;
 import br.com.elementalsource.mock.generic.model.Response;
 import br.com.six2six.fixturefactory.Fixture;
@@ -16,6 +17,8 @@ import static org.junit.Assert.assertNotNull;
 
 public class ResponseDtoTest {
 
+    private static Gson gson = new GsonFactory().gson();
+
     @BeforeClass
     public static void initClass() {
         FixtureFactoryLoader.loadTemplates("br.com.elementalsource.mock.generic.model.template");
@@ -27,7 +30,7 @@ public class ResponseDtoTest {
         final String json = "{ \"body\": { \"tt\": \"789\" } }";
 
         // when
-        final ResponseDto responseDto = new Gson().fromJson(json, ResponseDto.class);
+        final ResponseDto responseDto = gson.fromJson(json, ResponseDto.class);
         final Response response = responseDto.toModel();
 
         // then
@@ -42,7 +45,7 @@ public class ResponseDtoTest {
         final String json = "{ \"body\": [{ \"age\": 10 }, { \"age\": 11 }] }";
 
         // when
-        final ResponseDto responseDto = new Gson().fromJson(json, ResponseDto.class);
+        final ResponseDto responseDto = gson.fromJson(json, ResponseDto.class);
         final Response response = responseDto.toModel();
 
         // then
@@ -59,7 +62,7 @@ public class ResponseDtoTest {
 
         // when
         final ResponseDto modelDto = new ResponseDto(model, new FromJsonStringToObjectConverterImpl());
-        final String json = new Gson().toJson(modelDto);
+        final String json = gson.toJson(modelDto);
 
         // then
         JSONAssert.assertEquals(expectedJson, json, false);
@@ -73,7 +76,7 @@ public class ResponseDtoTest {
 
         // when
         final ResponseDto modelDto = new ResponseDto(model, new FromJsonStringToObjectConverterImpl());
-        final String json = new Gson().toJson(modelDto);
+        final String json = gson.toJson(modelDto);
 
         // then
         JSONAssert.assertEquals(expectedJson, json, false);

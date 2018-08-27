@@ -49,6 +49,10 @@ public class ApiProperty {
                 .filter(config -> config.getPattern().matcher(uri).find()).findAny();
     }
 
+    public String getRealUri(String uri){
+       return getConfiguration(uri).map(config -> uri.replaceAll(config.getPattern().pattern(), "")).orElse(uri);
+    }
+
     public String getHost() {
         return host;
     }

@@ -49,7 +49,7 @@ public class ExternalApi {
 
         final UriConfiguration uriConfiguration = apiProperty
                 .getConfiguration(request.getUri())
-                .orElse(new UriConfiguration(apiProperty.getHost(), Pattern.compile(".*"), state));
+                .orElse(new UriConfiguration(apiProperty.getHost(), Pattern.compile(".*"), state, ""));
         final Optional<HttpHeaders> httpHeaders = headerFilter.execute(request.getHeaders());
 
         LOGGER.info("### EXTERNAL API ###");
@@ -65,7 +65,7 @@ public class ExternalApi {
         final String parameters = request.getQuery().map(queryStringBuilder::fromMap).orElse("");
         final String url = uriConfiguration
                 .getHost()
-                .concat(request.getUri())
+                .concat(apiProperty.getRealUri(request.getUri()))
                 .concat(parameters);
 
         LOGGER.info("URL => {}", url);

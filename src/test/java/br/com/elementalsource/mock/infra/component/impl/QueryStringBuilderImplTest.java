@@ -1,7 +1,12 @@
 package br.com.elementalsource.mock.infra.component.impl;
 
 import br.com.elementalsource.mock.infra.component.ConvertJson;
+
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Answers;
@@ -10,6 +15,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QueryStringBuilderImplTest {
@@ -23,7 +31,7 @@ public class QueryStringBuilderImplTest {
     @Test
     public void shouldBeEmpty() {
         // given
-        final ImmutableMap<String, String> queryMap = ImmutableMap.<String, String>builder().build();
+        final ImmutableMultimap<String, String> queryMap = ImmutableMultimap.<String,String>builder().build();
 
         // when
         final String queryString = queryStringBuilder.fromMap(queryMap);
@@ -36,7 +44,7 @@ public class QueryStringBuilderImplTest {
     @Test
     public void shouldHaveOneParameter() {
         // given
-        final ImmutableMap<String, String> queryMap = ImmutableMap.<String, String>builder().put("name", "Paul").build();
+        final ImmutableMultimap<String, String> queryMap = ImmutableMultimap.<String,String>builder().put("name", "Paul").build();
 
         // when
         final String queryString = queryStringBuilder.fromMap(queryMap);
@@ -50,7 +58,7 @@ public class QueryStringBuilderImplTest {
     @Test
     public void shouldHaveTwoParameters() {
         // given
-        final ImmutableMap<String, String> queryMap = ImmutableMap.<String, String>builder().put("name", "Paul").put("age", "10").build();
+        final ImmutableMultimap<String, String> queryMap = ImmutableMultimap.<String,String>builder().put("name", "Paul").put("age", "10").build();
 
         // when
         final String queryString = queryStringBuilder.fromMap(queryMap);

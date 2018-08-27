@@ -10,7 +10,7 @@ api:
   # When is not find in repository, then will try to do a request in this host
   host: "http://www.mocky.io"
 
-  magicalHeaders: "Accept,User-Agent,Content-Type"
+  acceptedHeaders: "Accept,User-Agent,Content-Type"
 
   # Default headers to do a request
   defaultHeaders:
@@ -28,12 +28,13 @@ api:
   # When a request uri match with some pattern, than this host will be used
   uriConfigurations:
     -
-      host: "http://www.mocky2.io"
-      pattern: "begin-of-uri/|another-pattern/"
-      backup: false
+      host: "http://some-site1.com"
+      pattern: "/site1"
+      prefixPath: "site1"
     -
-      host: "http://www.mocky3.io"
-      pattern: "teste/|test/"
+      host: "http://some-site2.com"
+      pattern: "/site2"
+      prefixPath: "site2"
 
 # Paths of json
 file:

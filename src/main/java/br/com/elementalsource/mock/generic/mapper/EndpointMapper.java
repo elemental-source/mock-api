@@ -18,17 +18,19 @@ public class EndpointMapper {
     private static final Logger LOGGER = LoggerFactory.getLogger(EndpointMapper.class);
 
     private final FileJsonReader fileJsonReader;
+    private final Gson gson;
 
     @Autowired
-    public EndpointMapper(FileJsonReader fileJsonReader) {
+    public EndpointMapper(FileJsonReader fileJsonReader, Gson gson) {
         this.fileJsonReader = fileJsonReader;
+        this.gson = gson;
     }
 
     public Optional<Endpoint> mapper(RequestMethod requestMethod, String requestUrl, String fileName) {
         try {
             return fileJsonReader
                     .getJsonByFileName(fileName)
-                    .map(endpointDtoJson -> new Gson().fromJson(endpointDtoJson, EndpointDto.class))
+                    .map(endpointDtoJson -> gson.fromJson(endpointDtoJson, EndpointDto.class))
                     .map(endpointDto -> endpointDto.toModel(requestMethod, requestUrl))
                     .map(endpoint -> new Endpoint.Builder(endpoint).withId(fileName).build());
         } catch (IOException e) {

@@ -10,11 +10,13 @@ public class UriConfiguration implements Serializable {
     private String host;
     private Pattern pattern;
     private Boolean backup;
+    private String prefixPath;
 
-    public UriConfiguration(String host, Pattern pattern, Boolean backup) {
+    public UriConfiguration(String host, Pattern pattern, Boolean backup, String prefixPath) {
         this.host = host;
         this.pattern = pattern;
         this.backup = backup;
+        this.prefixPath = prefixPath;
     }
 
     public UriConfiguration() {
@@ -31,6 +33,14 @@ public class UriConfiguration implements Serializable {
 
     public Pattern getPattern() {
         return pattern;
+    }
+
+	public void setPrefixPath(final String prefixPath) {
+		this.prefixPath = prefixPath;
+	}
+
+	public String getPrefixPath() {
+        return prefixPath;
     }
 
     public void setPattern(String pattern) {

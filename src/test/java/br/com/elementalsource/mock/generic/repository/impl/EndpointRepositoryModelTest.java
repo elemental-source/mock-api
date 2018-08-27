@@ -36,11 +36,10 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class EndpointRepositoryModelTest {
 
-    private static final String NAME = "/get/";
     @InjectMocks
     private EndpointRepositoryModel endpointRepositoryModel;
     @Mock
-    private FileProperty fileProperty;
+    private Request request;
     @Mock
     private FileExtensionProperty fileExtensionProperty;
     @Mock
@@ -83,9 +82,9 @@ public class EndpointRepositoryModelTest {
         // when
         when(endpointMapper.mapper(any(), any(), any())).thenReturn(endpoint);
         when(fileExtensionProperty.getFileExtension()).thenReturn(fileExtension);
-        when(baseFileNameBuilder.buildPath(any(), any())).thenReturn(basePath);
+        when(baseFileNameBuilder.buildPath(any())).thenReturn(basePath);
 
-        final Collection<Endpoint> mocks = endpointRepositoryModel.getByMethodAndUri(requestMethod, requestUrl);
+        final Collection<Endpoint> mocks = endpointRepositoryModel.getAllByRequest(request);
 
         // then
         assertNotNull(mocks);
@@ -100,9 +99,9 @@ public class EndpointRepositoryModelTest {
         final String basePath = Paths.get(resource.getAbsolutePath(), requestUrl).toAbsolutePath().toString();
 
         // when
-        when(baseFileNameBuilder.buildPath(any(), any())).thenReturn(basePath);
+        when(baseFileNameBuilder.buildPath(any())).thenReturn(basePath);
 
-        final Collection<Endpoint> mocks = endpointRepositoryModel.getByMethodAndUri(requestMethod, requestUrl);
+        final Collection<Endpoint> mocks = endpointRepositoryModel.getAllByRequest(request);
 
         // then
         assertNotNull(mocks);
@@ -119,10 +118,10 @@ public class EndpointRepositoryModelTest {
         // when
         when(endpointMapper.mapper(any(), any(), any())).thenReturn(result);
         when(fileExtensionProperty.getFileExtension()).thenReturn(fileExtension);
-        when(baseFileNameBuilder.buildPath(any(), any())).thenReturn(basePath);
+        when(baseFileNameBuilder.buildPath(any())).thenReturn(basePath);
         when(endpointMockFileFilterRequest.apply(any(), any())).thenReturn(true);
 
-        final Optional<Endpoint> endpointMock = endpointRepositoryModel.getByMethodAndRequest(mock(Request.class));
+        final Optional<Endpoint> endpointMock = endpointRepositoryModel.getByRequest(mock(Request.class));
 
         // then
         assertEquals(result, endpointMock);
