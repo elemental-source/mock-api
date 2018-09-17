@@ -4,6 +4,7 @@ import br.com.elementalsource.mock.generic.model.Endpoint;
 import br.com.elementalsource.mock.generic.model.Request;
 import br.com.elementalsource.mock.infra.component.file.BaseFileNameBuilderModel;
 import br.com.elementalsource.mock.infra.component.file.FileNameGenerator;
+import br.com.elementalsource.mock.infra.component.gson.GsonFactory;
 import br.com.elementalsource.mock.infra.property.FileExtensionProperty;
 import br.com.elementalsource.mock.generic.model.template.EndpointTemplate;
 import br.com.elementalsource.mock.generic.repository.EndpointRepository;
@@ -12,6 +13,8 @@ import br.com.elementalsource.mock.infra.component.impl.JsonFormatterPretty;
 import br.com.elementalsource.mock.infra.property.FileProperty;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
+
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -35,11 +38,12 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.when;
 
+import com.google.gson.Gson;
+
 @RunWith(MockitoJUnitRunner.class)
 public class EndpointBackupServiceFileTest {
     private static final String BACKUP_TEMP = "backup-temp/";
 
-    @InjectMocks
     private EndpointBackupServiceFile endpointBackupServiceFile;
 
     @Mock
@@ -57,9 +61,17 @@ public class EndpointBackupServiceFileTest {
     @Mock
     private JsonFormatterPretty jsonFormatterPretty;
 
+    private Gson gson = new GsonFactory().gson();
+
+
     @BeforeClass
     public static void initClass() {
         FixtureFactoryLoader.loadTemplates("br.com.elementalsource.mock.generic.model.template");
+    }
+
+    @Before
+    public void setup(){
+        endpointBackupServiceFile = new EndpointBackupServiceFile(fileProperty,fileExtensionProperty,baseFileNameBuilder,fileNameGenerator,fromJsonStringToObjectConverter,jsonFormatterPretty,endpointRepository,gson);
     }
 
     @Test

@@ -16,17 +16,25 @@ public class GsonFactory {
 
 	@Bean
 	public Gson gson(){
+		return gson(true);
+	}
+
+	public Gson gson(final boolean prettyPrint) {
+
 		if(INSTANCE == null){
-			INSTANCE =  new GsonBuilder()
+			GsonBuilder gsonBuilder = new GsonBuilder()
 					.enableComplexMapKeySerialization()
 					.registerTypeAdapter(Multimap.class, new MultimapAdapter())
 					.registerTypeAdapter(ArrayListMultimap.class, new MultimapAdapter())
-					.registerTypeAdapterFactory(SingleToArrayTypeAdapter.FACTORY)
-					.setPrettyPrinting()
-					.create();
+					.registerTypeAdapterFactory(SingleToArrayTypeAdapter.FACTORY);
+
+			if(prettyPrint){
+				gsonBuilder.setPrettyPrinting();
+			}
+
+			INSTANCE = gsonBuilder.create();
 
 		}
 		return INSTANCE;
 	}
-
 }

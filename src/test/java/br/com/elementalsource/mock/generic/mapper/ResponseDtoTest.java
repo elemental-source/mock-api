@@ -40,7 +40,7 @@ public class ResponseDtoTest {
     }
 
     @Test
-    public void shouldConvertFromJsonAListOfObjects() {
+    public void shouldConvertFromJsonAListOfObjects() throws JSONException {
         // given
         final String json = "{ \"body\": [{ \"age\": 10 }, { \"age\": 11 }] }";
 
@@ -51,7 +51,7 @@ public class ResponseDtoTest {
         // then
         assertNotNull(response);
         assertNotNull(response.getBody());
-        assertEquals("[{\"age\":10},{\"age\":11}]", response.getBody());
+        JSONAssert.assertEquals("[{\"age\":10},{\"age\":11}]", response.getBody(),false);
     }
 
     @Test

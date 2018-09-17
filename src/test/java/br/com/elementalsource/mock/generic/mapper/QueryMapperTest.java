@@ -1,6 +1,7 @@
 package br.com.elementalsource.mock.generic.mapper;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 
 import org.junit.Before;
@@ -53,7 +54,7 @@ public class QueryMapperTest {
     public void shouldConvertQueryWith1Parameter() {
         // given
         final String queryRequest = "name=Paul";
-        final Map expectedMap = ImmutableMap.<String, String>builder()
+        final ImmutableMultimap<String, String> expectedMap = ImmutableMultimap.<String, String>builder()
                 .put("name", "Paul")
                 .build();
 
@@ -69,7 +70,7 @@ public class QueryMapperTest {
     public void shouldConvertQueryWith2Parameter() {
         // given
         final String queryRequest = "name=Paul&age=10";
-        final Map expectedMap = ImmutableMap.<String, String>builder()
+        final ImmutableMultimap<String, String> expectedMap = ImmutableMultimap.<String, String>builder()
                 .put("name", "Paul")
                 .put("age", "10")
                 .build();

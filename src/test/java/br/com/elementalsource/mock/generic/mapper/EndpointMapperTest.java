@@ -2,6 +2,8 @@ package br.com.elementalsource.mock.generic.mapper;
 
 import br.com.elementalsource.mock.infra.component.file.FileJsonReader;
 import br.com.elementalsource.mock.generic.model.Endpoint;
+import br.com.elementalsource.mock.infra.component.gson.GsonFactory;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +22,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
+import com.google.gson.Gson;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class EndpointMapperTest {
@@ -29,17 +33,19 @@ public class EndpointMapperTest {
     @Value("${file.extension}")
     private String fileExtension;
 
-    @InjectMocks
     private EndpointMapper endpointMapper;
 
     @Mock
     private FileJsonReader fileJsonReader;
 
     private URL resource;
+    private Gson gson = new GsonFactory().gson();
 
     @Before
     public void init() {
+
         this.resource = getClass().getClassLoader().getResource(fileBase.concat("/get/"));
+        endpointMapper = new EndpointMapper(fileJsonReader, gson);
     }
 
     @Test

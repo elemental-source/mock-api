@@ -7,6 +7,7 @@ import br.com.elementalsource.mock.generic.mapper.QueryMapper;
 import br.com.elementalsource.mock.infra.component.gson.GsonFactory;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -107,7 +108,7 @@ public class RequestMapperTest {
 
         httpServletRequest.setQueryString("name=Paul&age=10");
 
-        final Map<String, String> expectedQuery = ImmutableMap.<String, String>builder()
+        final ImmutableMultimap<String, String> expectedQuery = ImmutableMultimap.<String, String>builder()
                 .put("name", "Paul")
                 .put("age", "10")
                 .build();

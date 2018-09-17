@@ -51,7 +51,7 @@ public class SingleToArrayTypeAdapter extends TypeAdapter<List<Object>> {
 	public void write(JsonWriter writer, List<Object> value)
 			throws IOException {
 		if (value.size() == 1) {
-			elementAdapter.write(writer, value.get(0));
+			elementAdapter.write(writer, value.get(0).toString());
 		} else {
 			delegateAdapter.write(writer, value);
 		}
