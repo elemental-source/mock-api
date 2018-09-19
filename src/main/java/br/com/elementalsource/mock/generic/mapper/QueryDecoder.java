@@ -47,7 +47,7 @@ public class QueryDecoder {
                     }
                 });
 
-                return parametersMap;
+                return newMap;
             };
 
         }
