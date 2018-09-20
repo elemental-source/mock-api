@@ -45,7 +45,7 @@ file:
   base: "${FILE_BASE:data}"
   extension: ".json"
   # Save request (cache) in this path
-  backup.path: "${FILE_BACKUP_PATH:data-backup}"
+  backup.path: "${FILE_BACKUP_PATH:data-cache}"
 
 # Initialize app in capture mode. All requests will be saved
 captureState: true

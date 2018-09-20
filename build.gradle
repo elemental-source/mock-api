@@ -77,7 +77,7 @@ task codeCoverageReport(type: JacocoReport) {
 
 task buildDocker(dependsOn: build) {
     exec{
-        commandLine 'docker', 'build', '-t', "local-mario/${jar.baseName}", '.'
+        commandLine 'docker', 'build', '-t', "registry.docker.elo7aws.com.br/${jar.baseName}", '.'
     }
 
 }
