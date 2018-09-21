@@ -4,6 +4,7 @@ import br.com.elementalsource.mock.generic.model.Endpoint;
 import br.com.elementalsource.mock.generic.model.Request;
 import br.com.elementalsource.mock.infra.component.file.BaseFileNameBuilderModel;
 import br.com.elementalsource.mock.infra.component.file.FileNameGenerator;
+import br.com.elementalsource.mock.infra.component.gson.GsonFactory;
 import br.com.elementalsource.mock.infra.property.FileExtensionProperty;
 import br.com.elementalsource.mock.generic.model.template.EndpointTemplate;
 import br.com.elementalsource.mock.generic.repository.EndpointRepository;
@@ -12,6 +13,8 @@ import br.com.elementalsource.mock.infra.component.impl.JsonFormatterPretty;
 import br.com.elementalsource.mock.infra.property.FileProperty;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
+
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -35,11 +38,12 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.when;
 
+import com.google.gson.Gson;
+
 @RunWith(MockitoJUnitRunner.class)
 public class EndpointBackupServiceFileTest {
     private static final String BACKUP_TEMP = "backup-temp/";
 
-    @InjectMocks
     private EndpointBackupServiceFile endpointBackupServiceFile;
 
     @Mock
@@ -50,16 +54,24 @@ public class EndpointBackupServiceFileTest {
     private BaseFileNameBuilderModel baseFileNameBuilder;
     @Mock
     private FileNameGenerator fileNameGenerator;
-    @Mock(answer = Answers.CALLS_REAL_METHODS)
-    private FromJsonStringToObjectConverter fromJsonStringToObjectConverter;
-    @Mock(answer = Answers.CALLS_REAL_METHODS)
-    private JsonFormatterPretty jsonFormatterPretty;
     @Mock
     private EndpointRepository endpointRepository;
+    @Mock
+    private FromJsonStringToObjectConverter fromJsonStringToObjectConverter;
+    @Mock
+    private JsonFormatterPretty jsonFormatterPretty;
+
+    private Gson gson = new GsonFactory().gson();
+
 
     @BeforeClass
     public static void initClass() {
         FixtureFactoryLoader.loadTemplates("br.com.elementalsource.mock.generic.model.template");
+    }
+
+    @Before
+    public void setup(){
+        endpointBackupServiceFile = new EndpointBackupServiceFile(fileProperty,fileExtensionProperty,baseFileNameBuilder,fileNameGenerator,fromJsonStringToObjectConverter,jsonFormatterPretty,endpointRepository,gson);
     }
 
     @Test
@@ -73,11 +85,11 @@ public class EndpointBackupServiceFileTest {
 
         // when
         if (Files.exists(path)) Files.delete(path);
-        when(endpointRepository.getByMethodAndRequest(any(Request.class))).thenReturn(Optional.empty());
+        when(endpointRepository.getByRequest(any(Request.class))).thenReturn(Optional.empty());
         when(baseFileNameBuilder.buildPath(anyString(), anyString(), anyString())).thenReturn(pathName);
         when(fileExtensionProperty.getFileExtension()).thenReturn(fileExtension);
         when(fileNameGenerator.fromPath(anyString())).thenReturn(fileName);
-        when(fileProperty.getFileBase()).thenReturn(BACKUP_TEMP);
+        when(fileProperty.getFileBase(any())).thenReturn(BACKUP_TEMP);
 
         endpointBackupServiceFile.doBackup(endpoint);
 
@@ -85,43 +97,5 @@ public class EndpointBackupServiceFileTest {
         assertTrue(Files.exists(path));
     }
 
-    @Test
-    @Ignore
-    public void shouldRemoveEverithingImportantInsidePath() throws IOException {
-        // given
-        final String baseNameFilesToRemove = BACKUP_TEMP + "data/files";
-        final Path pathsToRemove = Paths.get(baseNameFilesToRemove + "/file1.json");
-
-        final String baseNameFilesToNotRemove = BACKUP_TEMP + ".keep-folder";
-        final Path pathsDoNotRemove = Paths.get(baseNameFilesToNotRemove + "/fileDotNotRemove1.json");
-
-        final Path keepFilePath = Paths.get(baseNameFilesToNotRemove + ".keep-file");
-
-        // before
-        if (Files.exists(pathsToRemove)) Files.delete(pathsToRemove);
-        if (Files.exists(pathsDoNotRemove)) Files.delete(pathsDoNotRemove);
-        Files.deleteIfExists(keepFilePath);
-
-        // when
-        when(fileProperty.getFileBase()).thenReturn(BACKUP_TEMP);
-
-        Files.createDirectories(Paths.get(baseNameFilesToRemove));
-        Files.createFile(pathsToRemove);
-
-        Files.createDirectories(Paths.get(baseNameFilesToNotRemove));
-        Files.createFile(pathsDoNotRemove);
-
-        assertTrue(Files.exists(pathsToRemove));
-        assertTrue(Files.exists(pathsDoNotRemove));
-
-        endpointBackupServiceFile.cleanAllBackupData();
-
-        // then
-        assertFalse(Files.exists(pathsToRemove));
-        assertTrue(Files.exists(pathsDoNotRemove));
-
-        // after
-        FileSystemUtils.deleteRecursively(new File(baseNameFilesToNotRemove)); // dangerous
-    }
 
 }

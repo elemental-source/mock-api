@@ -1,10 +1,12 @@
 package br.com.elementalsource.mock.infra.component.file;
 
+import br.com.elementalsource.mock.generic.model.Request;
 import br.com.elementalsource.mock.infra.property.FileProperty;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,32 +31,34 @@ public class BaseFileNameBuilderModelTest {
     @Qualifier("BaseFileNameBuilderModel")
     private BaseFileNameBuilder baseFileNameBuilder;
 
+    private Request request;
+
     @Before
     public void init() {
-        this.resource = getClass().getClassLoader().getResource(fileProperty.getFileBase());
+        request = Mockito.mock(Request.class);
+        Mockito.when(request.getMethod()).thenReturn(RequestMethod.GET);
+        Mockito.when(request.getUri()).thenReturn("/person");
+
+        this.resource = getClass().getClassLoader().getResource(fileProperty.getRootPath());
     }
 
     @Test
     public void shouldHavePathToTest() {
         assertNotNull(baseFileNameBuilder);
-        assertNotNull(fileProperty.getFileBase());
-        assertFalse(fileProperty.getFileBase().isEmpty());
+        assertNotNull(fileProperty.getFileBase(request));
+        assertFalse(fileProperty.getFileBase(request).isEmpty());
         assertNotNull(resource);
         assertNotNull(resource.getFile());
     }
 
     @Test
     public void shouldBuildPath() {
-        // given
-        final RequestMethod requestMethod = RequestMethod.GET;
-        final String pathUri = "/person";
-
         // when
-        final String path = baseFileNameBuilder.buildPath(requestMethod, pathUri);
+        final String path = baseFileNameBuilder.buildPath(request);
 
         // then
         assertNotNull(path);
-        assertThat(path, CoreMatchers.endsWith(fileProperty.getFileBase() + "/get/person"));
+        assertThat(path, CoreMatchers.endsWith(fileProperty.getFileBase(request) + "/get/person"));
     }
 
 }

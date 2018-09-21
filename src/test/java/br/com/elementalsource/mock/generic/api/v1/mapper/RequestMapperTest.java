@@ -4,7 +4,12 @@ import br.com.elementalsource.mock.generic.mapper.QueryDecoder;
 import br.com.elementalsource.mock.generic.model.Request;
 import br.com.elementalsource.mock.generic.mapper.HeaderMapper;
 import br.com.elementalsource.mock.generic.mapper.QueryMapper;
+import br.com.elementalsource.mock.infra.component.gson.GsonFactory;
+
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,12 +33,14 @@ public class RequestMapperTest {
 
     private QueryMapper queryMapper;
     private HeaderMapper headerMapper;
+    private Gson gson;
 
     @Before
     public void init() {
         this.queryMapper = new QueryMapper(new QueryDecoder().decoderFactoryImplementation(""));
         this.headerMapper = new HeaderMapper();
-        this.requestMapper = new RequestMapper(queryMapper, headerMapper);
+        this.gson = new GsonFactory().gson();
+        this.requestMapper = new RequestMapper(queryMapper, headerMapper,gson);
     }
 
     @Test
@@ -101,7 +108,7 @@ public class RequestMapperTest {
 
         httpServletRequest.setQueryString("name=Paul&age=10");
 
-        final Map<String, String> expectedQuery = ImmutableMap.<String, String>builder()
+        final ImmutableMultimap<String, String> expectedQuery = ImmutableMultimap.<String, String>builder()
                 .put("name", "Paul")
                 .put("age", "10")
                 .build();

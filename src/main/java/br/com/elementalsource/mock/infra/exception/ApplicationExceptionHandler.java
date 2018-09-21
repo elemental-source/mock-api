@@ -7,6 +7,7 @@ import br.com.elementalsource.mock.infra.exception.impl.ErrorApplicationExceptio
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,7 +20,9 @@ import org.springframework.web.client.ResourceAccessException;
 public class ApplicationExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationExceptionHandler.class);
-    private static final Gson GSON = new Gson();
+
+    @Autowired
+    private Gson gson;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ApplicationExceptionImpl.class)
@@ -58,7 +61,7 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(HttpClientErrorException.class)
     @ResponseBody
     public ApplicationExceptionMessage handleHttpClientErrorException(HttpClientErrorException e) {
-        final ApplicationExceptionMessageImpl applicationExceptionMessage = GSON.fromJson(e.getResponseBodyAsString(), ApplicationExceptionMessageImpl.class);
+        final ApplicationExceptionMessageImpl applicationExceptionMessage = gson.fromJson(e.getResponseBodyAsString(), ApplicationExceptionMessageImpl.class);
         LOGGER.error("handleHttpClientErrorException", e);
         return applicationExceptionMessage;
     }

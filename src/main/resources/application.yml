@@ -1,52 +1,55 @@
 # vmoptions: -Dspring.profiles.active=test
+
 server.port: 9090
 
 api:
-  # Requests accept just this headers (optinal property). If property not exists, all headers are accepted
-#  acceptedHeaders:
-#    - "accept"
-#    - "Content-Type"
+  # Pay 7 precisa ser a raiz pq não dá pra adicionar um prefixo no marketplace
+  host: "https://sandbox-api.pay7.com.br"
 
-  # When is not find in repository, then will try to do a request in this host
-  host: "http://www.mocky.io"
+  acceptedHeaders: "Accept,User-Agent,Content-Type,X-Auth-User-Id,Authorization"
 
-  magicalHeaders: "Accept,User-Agent,Content-Type"
-
-  # Default headers to do a request
   defaultHeaders:
-    -
-      headerName: "Access-Control-Allow-Origin"
-      headerValues:
-        - "Connection"
-        - "Keep-Alive"
-    -
-      headerName: "Content-Type"
-      headerValues:
-        - "application/json;charset=UTF-8"
+  -
+    headerName: "Access-Control-Allow-Origin"
+    headerValues:
+    - "Connection"
+    - "Keep-Alive"
+  -
+    headerName: "Content-Type"
+    headerValues:
+    - "application/json;charset=UTF-8"
 
   # Alternative hosts
   # When a request uri match with some pattern, than this host will be used
   uriConfigurations:
-    -
-      host: "http://www.mocky2.io"
-      pattern: "begin-of-uri/|another-pattern/"
-      backup: false
-    -
-      host: "http://www.mocky3.io"
-      pattern: "teste/|test/"
+  -
+    host: "http://tyrion-us-dev.kube.aws.elo7.io"
+    pattern: "/tyrion"
+    prefixPath: "tyrion"
+  -
+    host: "http://frenzy-br-integration-blue.aws.elo7.io/frenzy"
+    pattern: "/frenzy"
+    prefixPath: "frenzy"
+  -
+    host: "http://shipping7-api.kube.elo7aws.com.br"
+    pattern: "/shipping7"
+    prefixPath: "shipping7"
+  -
+    host: "https://sandbox-api.pay7.com.br"
+    pattern: "/pay7"
+    prefixPath: "" # pay7 está na raiz :/
 
 # Paths of json
 file:
   # Look for this path to find json with a request
-  base: "${FILE_BASE:mocks-test}"
+  base: "${FILE_BASE:data}"
   extension: ".json"
   # Save request (cache) in this path
-  backup.path: "${FILE_BACKUP_PATH:backup-temp}"
+  backup.path: "${FILE_BACKUP_PATH:data-cache}"
 
 # Initialize app in capture mode. All requests will be saved
 captureState: true
 
-# Optional, use if you want decode query parameters
 decoder.characterEncoding: "UTF-8"
 
 #debug: true

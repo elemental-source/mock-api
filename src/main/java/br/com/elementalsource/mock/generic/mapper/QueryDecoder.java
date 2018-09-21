@@ -9,39 +9,56 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import static java.util.Map.*;
 import static java.util.stream.Collectors.toMap;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 
 @Configuration
 public class QueryDecoder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QueryDecoder.class);
 
+    static DecoderFunction identity = map -> map;
+
     @FunctionalInterface
     interface DecoderFunction {
-        Map<String, String> decode(Map<String, String> map);
+        Multimap<String,String> decode(Multimap<String, String> map);
     }
 
     @Bean
     public DecoderFunction decoderFactoryImplementation(@Value("${decoder.characterEncoding:}") final String characterEncoding) {
         if (StringUtils.isBlank(characterEncoding)) {
-            return parameters -> parameters;
+            return identity;
         } else {
-            final Function<Map.Entry<String, String>, String> decodeFunction = value -> {
-                try {
-                    return URLDecoder.decode(value.getValue(), characterEncoding);
-                } catch (UnsupportedEncodingException e) {
-                    LOGGER.error("Cannot decode URL {}", e);
-                    return value.getValue();
-                }
+            return parametersMap -> {
+                Multimap newMap = ArrayListMultimap.create();
+
+                parametersMap.asMap().forEach((key,values) -> {
+                    for (String v: values) {
+                        newMap.put(key, decodeValue(v, characterEncoding));
+                    }
+                });
+
+                return newMap;
             };
 
-            return parameters -> parameters.
-                    entrySet().
-                    stream().
-                    collect(toMap(Map.Entry::getKey, decodeFunction));
+        }
+    }
+
+    private String decodeValue(String value, String characterEncoding){
+        try {
+            return URLDecoder.decode(value, characterEncoding);
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("Cannot decode URL {}", e);
+            return value;
         }
     }
 

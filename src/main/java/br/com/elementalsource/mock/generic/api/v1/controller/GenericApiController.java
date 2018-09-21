@@ -33,20 +33,22 @@ public class GenericApiController {
     private final RequestMapper requestMapper;
     private final JsonFormatter jsonFormatter;
     private final RequestFormatter requestFormatter;
+    private final Gson gson;
 
     @Autowired
     public GenericApiController(GenericApiService genericApiService, RequestMapper requestMapper,
-                                JsonFormatter jsonFormatter, RequestFormatter requestFormatter) {
+                                JsonFormatter jsonFormatter, RequestFormatter requestFormatter, Gson gson) {
         this.genericApiService = genericApiService;
         this.requestMapper = requestMapper;
         this.jsonFormatter = jsonFormatter;
         this.requestFormatter = requestFormatter;
+        this.gson = gson;
     }
 
     private void logRequest(final HttpServletRequest request, final Optional<Object> requestBody) {
         LOGGER.info(requestFormatter.generateLog(request, requestBody));
         LOGGER.info("Headers: " + genericApiService.getHeaders(request));
-        requestBody.ifPresent(body -> logJson(new Gson().toJson(body)));
+        requestBody.ifPresent(body -> logJson(gson.toJson(body)));
     }
 
     private void logJson(final String jsonString) {

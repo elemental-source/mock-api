@@ -6,6 +6,4 @@ public interface EndpointBackupService {
 
     void doBackup(Endpoint endpoint);
 
-    void cleanAllBackupData(); // dangerous
-
 }

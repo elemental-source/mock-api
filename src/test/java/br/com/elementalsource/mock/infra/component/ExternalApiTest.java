@@ -44,6 +44,7 @@ public class ExternalApiTest {
 
 		// when
 		when(apiProperty.getConfiguration(anyString())).thenReturn(Optional.of(configuration));
+		when(apiProperty.getRealUri(anyString())).thenReturn(URI);
 		final Optional<ExternalApiResult> responseEntity = externalApi.execute(request);
 
 		// then
@@ -64,6 +65,7 @@ public class ExternalApiTest {
 
 		// when
 		when(apiProperty.getConfiguration(anyString())).thenReturn(Optional.of(configuration));
+		when(apiProperty.getRealUri(anyString())).thenReturn(URI);
 		final Optional<ExternalApiResult> responseEntity = externalApi.execute(request);
 
 		// then
@@ -84,6 +86,7 @@ public class ExternalApiTest {
 
 		// when
 		when(apiProperty.getConfiguration(anyString())).thenReturn(Optional.of(configuration));
+		when(apiProperty.getRealUri(anyString())).thenReturn(URI);
 		final Optional<ExternalApiResult> responseEntity = externalApi.execute(request);
 
 		// then

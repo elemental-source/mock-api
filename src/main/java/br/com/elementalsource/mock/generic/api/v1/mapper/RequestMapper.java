@@ -3,6 +3,8 @@ package br.com.elementalsource.mock.generic.api.v1.mapper;
 import br.com.elementalsource.mock.generic.mapper.HeaderMapper;
 import br.com.elementalsource.mock.generic.model.Request;
 import br.com.elementalsource.mock.generic.mapper.QueryMapper;
+import br.com.elementalsource.mock.infra.property.ApiProperty;
+
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,15 +16,15 @@ import java.util.Optional;
 @Component
 public class RequestMapper {
 
-    private static final Gson GSON = new Gson();
-
     private final QueryMapper queryMapper;
     private final HeaderMapper headerMapper;
+    private final Gson gson;
 
     @Autowired
-    public RequestMapper(QueryMapper queryMapper, HeaderMapper headerMapper) {
+    public RequestMapper(QueryMapper queryMapper, HeaderMapper headerMapper, Gson gson) {
         this.queryMapper = queryMapper;
         this.headerMapper = headerMapper;
+        this.gson = gson;
     }
 
     private Request.Builder mapperBuilder(final HttpServletRequest request) {
@@ -40,7 +42,7 @@ public class RequestMapper {
         final Request.Builder requestMockBuilder = mapperBuilder(request);
 
         return requestBody
-                .map(requestBodyJson -> requestMockBuilder.withBody(Optional.ofNullable(GSON.toJson(requestBodyJson))))
+                .map(requestBodyJson -> requestMockBuilder.withBody(Optional.ofNullable(gson.toJson(requestBodyJson))))
                 .orElse(requestMockBuilder)
                 .build();
     }

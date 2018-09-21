@@ -39,21 +39,24 @@ public class EndpointRepositoryBase implements EndpointRepository {
     }
 
     @Override
-    public Collection<Endpoint> getByMethodAndUri(RequestMethod requestMethod, String requestUrl) {
-        return ImmutableList.copyOf(getByMethodAndUriMutable(requestMethod, requestUrl));
+    public Collection<Endpoint> getAllByRequest(Request request) {
+        return ImmutableList.copyOf(getByMethodAndUriMutable(request));
     }
 
     @Override
-    public Optional<Endpoint> getByMethodAndRequest(Request request) {
-        return getByMethodAndUri(request.getMethod(), request.getUri())
+    public Optional<Endpoint> getByRequest(Request request) {
+        return getAllByRequest(request)
                 .stream()
                 .sorted()
                 .filter(endpointMock -> endpointFileFilterRequest.apply(endpointMock, request))
                 .findFirst();
     }
 
-    private List<Endpoint> getByMethodAndUriMutable(RequestMethod requestMethod, String requestUrl) {
-        final String basePath = baseFileNameBuilder.buildPath(requestMethod, requestUrl);
+    private List<Endpoint> getByMethodAndUriMutable(Request request) {
+        RequestMethod requestMethod = request.getMethod();
+        String requestUrl = request.getUri();
+
+        final String basePath = baseFileNameBuilder.buildPath(request);
 
         final Path start = Paths.get(basePath);
         if (!Files.exists(start)) {

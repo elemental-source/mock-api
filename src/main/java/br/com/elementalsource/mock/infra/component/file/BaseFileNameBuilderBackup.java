@@ -1,5 +1,6 @@
 package br.com.elementalsource.mock.infra.component.file;
 
+import br.com.elementalsource.mock.infra.property.ApiProperty;
 import br.com.elementalsource.mock.infra.property.FileProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Component;
 public class BaseFileNameBuilderBackup extends BaseFileNameBuilderBase implements BaseFileNameBuilder {
 
     @Autowired
-    public BaseFileNameBuilderBackup(@Qualifier("FilePropertyBackup") FileProperty fileProperty) {
-        super(fileProperty);
+    public BaseFileNameBuilderBackup(@Qualifier("FilePropertyBackup") FileProperty fileProperty, ApiProperty apiProperty) {
+        super(fileProperty, apiProperty);
     }
 
 }

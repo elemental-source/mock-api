@@ -67,11 +67,10 @@ public class EndpointBackupServiceFileIntegrarionTest {
         responseJson = endpoint.getResponse().getBody();
 
         uri = endpoint.getRequest().getUri();
-        String backupPathName = new File("").getAbsolutePath() + "/" + fileProperty.getFileBase();
+        String backupPathName = new File("").getAbsolutePath() + "/" + fileProperty.getRootPath();
         this.baseName = backupPathName + "/";
         fileName = baseName + endpoint.getRequest().getMethod().name().toLowerCase() + uri + "/1" + fileExtensionProperty.getFileExtension();
 
-        deleteBackupFolder();
         this.resource = getClass().getClassLoader().getResource(fileBase);
     }
 
@@ -81,14 +80,9 @@ public class EndpointBackupServiceFileIntegrarionTest {
         assertNotNull(resource.getFile());
     }
 
-    public void deleteBackupFolder() throws IOException {
-        endpointBackupService.cleanAllBackupData();
-    }
-
     @After
     public void setupRestore() throws IOException {
         restTemplate.delete(CONFIGURATION_CAPTURE_STATE + "/disable"); // change setup
-        deleteBackupFolder();
     }
 
     @Test(timeout = 2000)

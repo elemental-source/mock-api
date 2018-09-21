@@ -11,8 +11,12 @@ import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.util.Optional;
 
+import br.com.elementalsource.mock.infra.component.gson.GsonFactory;
+
 @RunWith(MockitoJUnitRunner.class)
 public class FromJsonStringToObjectConverterImplTest {
+
+    private static Gson gson = new GsonFactory().gson();
 
     @InjectMocks
     private FromJsonStringToObjectConverterImpl converter;
@@ -25,7 +29,7 @@ public class FromJsonStringToObjectConverterImplTest {
 
         // when
         final Object jsonObject = converter.apply(jsonString);
-        final String json = new Gson().toJson(jsonObject);
+        final String json = gson.toJson(jsonObject);
 
         // then
         JSONAssert.assertEquals(expectedJson, json, false);
@@ -39,7 +43,7 @@ public class FromJsonStringToObjectConverterImplTest {
 
         // when
         final Object jsonObject = converter.apply(jsonString);
-        final String json = new Gson().toJson(jsonObject);
+        final String json = gson.toJson(jsonObject);
 
         // then
         JSONAssert.assertEquals(expectedJson, json, false);
@@ -53,7 +57,7 @@ public class FromJsonStringToObjectConverterImplTest {
 
         // when
         final Object jsonObject = converter.apply(jsonString);
-        final String json = new Gson().toJson(jsonObject);
+        final String json = gson.toJson(jsonObject);
 
         // then
         JSONAssert.assertEquals(expectedJson, json, false);

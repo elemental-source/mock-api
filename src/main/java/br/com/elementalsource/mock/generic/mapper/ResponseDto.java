@@ -2,6 +2,7 @@ package br.com.elementalsource.mock.generic.mapper;
 
 import br.com.elementalsource.mock.generic.model.Response;
 import br.com.elementalsource.mock.infra.component.FromJsonStringToObjectConverter;
+import br.com.elementalsource.mock.infra.component.gson.GsonFactory;
 import br.com.elementalsource.mock.infra.exception.impl.ApiApplicationException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 public class ResponseDto implements Serializable {
 
-    private static final Gson GSON = new Gson();
+    private static final Gson GSON = new GsonFactory().gson();
 
     private final JsonElement body;
     private final Integer httpStatus;

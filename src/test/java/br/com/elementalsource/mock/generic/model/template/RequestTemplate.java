@@ -6,6 +6,8 @@ import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,7 +45,7 @@ public class RequestTemplate implements TemplateLoader {
                 .inherits(VALID_WITH_HEADERS, new Rule() {{
                     add("method", RequestMethod.POST);
                     add("uri", "/person/11");
-                    add("query", Optional.of(ImmutableMap.<String, Object>builder().put("text", "abc").put("age", 10).build()));
+                    add("query", Optional.of(ImmutableMultimap.<String, Object>builder().put("text", "abc").put("age", "10").build()));
                     add("body", Optional.of("{\"id\": 7, \"name\": \"Paul\" }"));
                 }})
                 .addTemplate(VALID_WITH_LIST)
@@ -52,11 +54,11 @@ public class RequestTemplate implements TemplateLoader {
                 }})
                 .addTemplate(VALID_QUERY_AGE10)
                 .inherits(VALID_EMPTY, new Rule() {{
-                    add("query", Optional.of(ImmutableMap.<String, String>builder().put("age", "10").build()));
+                    add("query", Optional.of(ImmutableMultimap.<String, String>builder().put("age", "10").build()));
                 }})
                 .addTemplate(VALID_QUERY_AGE25)
                 .inherits(VALID_EMPTY, new Rule() {{
-                    add("query", Optional.of(ImmutableMap.<String, String>builder().put("age", "25").build()));
+                    add("query", Optional.of(ImmutableMultimap.<String, String>builder().put("age", "25").build()));
                 }})
                 .addTemplate(VALID_BODY_ID6)
                 .inherits(VALID_EMPTY, new Rule() {{

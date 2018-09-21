@@ -42,7 +42,7 @@ public class GenericApiServiceImpl implements GenericApiService {
     }
 
     private Optional<Endpoint> getEndpoint(Request request) {
-        return endpointRepository.getByMethodAndRequest(request);
+        return endpointRepository.getByRequest(request);
     }
 
     // TODO talvez extrair para uma classe
