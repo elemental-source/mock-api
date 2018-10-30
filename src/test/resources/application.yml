@@ -39,15 +39,3 @@ captureState: false
 
 #debug: true
 logging.level.ROOT: INFO
-
-prefix:
-    stringProp1: propValue1
-    stringProp2: propValue2
-    intProp1: 10
-    listProp:
-        - listValue1
-        - listValue2
-    mapProp:
-        key1: mapValue1
-        key2: mapValue2
-
